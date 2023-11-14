@@ -28,6 +28,16 @@ class User {
     }
   }
 
+  static async findByUsername(username) {
+    try {
+      return await getDB()
+        .collection("Users")
+        .findOne({ username });
+    } catch (err) {
+      throw err;
+    }
+  }
+
   static async findOrCreate(username, email, data) {
     try {
       const result = await getDB()

@@ -32,5 +32,7 @@
     - User.create(data)
     - User.findAll()
     - User.findByPk(id)
+    - User.findByUsername(username)
+    - User.findOrCreate(username, email, data)
     - User.update(data)
     - User.destroy(id)

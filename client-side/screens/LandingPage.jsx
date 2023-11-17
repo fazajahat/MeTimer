@@ -3,7 +3,7 @@ import { View, Text, ScrollView, FlatList, Platform } from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Searchbar, Button } from "react-native-paper";
-import MyCard from "./CardPage";
+import MyCard from "../components/CardPage";
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 
 export default function LandingPage() {

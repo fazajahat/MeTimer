@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, ScrollView, FlatList, Platform } from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Searchbar, Button } from "react-native-paper";
-import MyCard from "./CardPage";
-import { MaterialCommunityIcons } from 'react-native-vector-icons';
-import Calendar from "./Calendar"
+import { Searchbar } from "react-native-paper";
+import Calendar from "./JournalPage"
+import MyCard from "../components/CardPage";
+import MoodButton from "../components/MoodButton";
 
 export default function LandingPage() {
   const currentDate = new Date();
@@ -37,56 +37,13 @@ export default function LandingPage() {
             How was your mood today
           </Text>
           <View style={styles.iconContainer}>
-            <Button
-              icon={({ color }) => (
-                <MaterialCommunityIcons
-                  name="emoticon-cry-outline"
-                  size={50}
-                  color={color}
-                  style={styles.icons}
-                />
-              )}
-            />
-            <Button
-              icon={({ color }) => (
-                <MaterialCommunityIcons
-                  name="emoticon-cool-outline"
-                  size={50}
-                  color={color}
-                  style={styles.icons}
-                />
-              )}
-            />
-            <Button
-              icon={({ color }) => (
-                <MaterialCommunityIcons
-                  name="emoticon-sick-outline"
-                  size={50}
-                  color={color}
-                  style={styles.icons}
-                />
-              )}
-            />
-            <Button
-              icon={({ color }) => (
-                <MaterialCommunityIcons
-                  name="emoticon-excited-outline"
-                  size={50}
-                  color={color}
-                  style={styles.icons}
-                />
-              )}
-            />
-            <Button
-              icon={({ color }) => (
-                <MaterialCommunityIcons
-                  name="emoticon-kiss-outline"
-                  size={50}
-                  color={color}
-                  style={styles.icons}
-                />
-              )}
-            />
+
+          <MoodButton name="emoticon-cry-outline" />
+          <MoodButton name="emoticon-cool-outline" />
+          <MoodButton name="emoticon-sick-outline" />
+          <MoodButton name="emoticon-excited-outline" />
+          <MoodButton name="emoticon-kiss-outline" />
+
           </View>
         </View>
         <Calendar />

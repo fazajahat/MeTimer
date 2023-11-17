@@ -3,15 +3,21 @@ import { View, Text, ScrollView, FlatList, Platform } from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Searchbar } from "react-native-paper";
+import Calendar from "./JournalPage"
 import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
 
 export default function LandingPage() {
+  const currentDate = new Date();
+  const formattedDate = currentDate.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' });
+  
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.contentContainer}>
-          <Searchbar placeholder="Search" />
+        <View style={styles.dateContainer}>
+            <Text style={styles.dateText}>{formattedDate}</Text>
+          </View>
           <Text
             style={Platform.OS === "ios" ? styles.iosText : styles.androidText}
           >
@@ -40,6 +46,7 @@ export default function LandingPage() {
 
           </View>
         </View>
+        <Calendar />
       </ScrollView>
     </SafeAreaView>
   );
@@ -74,4 +81,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
   },
+  dateContainer: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10,
+  },
+  dateText: {
+    fontSize: 16,
+  }
 });

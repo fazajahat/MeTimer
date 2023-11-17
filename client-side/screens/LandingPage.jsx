@@ -2,9 +2,9 @@ import React from "react";
 import { View, Text, ScrollView, FlatList, Platform } from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Searchbar, Button } from "react-native-paper";
+import { Searchbar } from "react-native-paper";
 import MyCard from "../components/CardPage";
-import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import MoodButton from "../components/MoodButton";
 
 export default function LandingPage() {
   return (
@@ -32,61 +32,12 @@ export default function LandingPage() {
           </Text>
           <View style={styles.iconContainer}>
 
-          <Button
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="emoticon-cry-outline"
-                size={50}
-                color={color}
-                style={styles.icons}
-              />
-            )}
-          >
-          </Button>
-          <Button
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="emoticon-cool-outline"
-                size={50}
-                color={color}
-                style={styles.icons}
-              />
-            )}
-          >
-          </Button>
-          <Button
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="emoticon-sick-outline"
-                size={50}
-                color={color}
-                style={styles.icons}
-              />
-            )}
-          >
-          </Button>
-          <Button
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="emoticon-excited-outline"
-                size={50}
-                color={color}
-                style={styles.icons}
-              />
-            )}
-          >
-          </Button>
-          <Button
-            icon={({ color, size }) => (
-              <MaterialCommunityIcons
-                name="emoticon-kiss-outline"
-                size={50}
-                color={color}
-                style={styles.icons}
-              />
-            )}
-          >
-          </Button>
+          <MoodButton name="emoticon-cry-outline" />
+          <MoodButton name="emoticon-cool-outline" />
+          <MoodButton name="emoticon-sick-outline" />
+          <MoodButton name="emoticon-excited-outline" />
+          <MoodButton name="emoticon-kiss-outline" />
+
           </View>
         </View>
       </ScrollView>

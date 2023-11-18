@@ -9,12 +9,20 @@ import {
 } from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Searchbar } from "react-native-paper";
-import JournalPage from "./JournalPage";
+import { useEffect } from "react";
+import { useMainStore } from "../stores/mainStore";
 import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
 
 export default function LandingPage({ navigation }) {
+  const getQuote = useMainStore((state) => state.getQuote)
+  const quote = useMainStore((state) => state.quote)
+
+  useEffect(() => {
+    getQuote()
+    console.log(quote, "<<< data quote")
+  }, [])
+
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-US", {
     weekday: "long",
@@ -85,8 +93,8 @@ export default function LandingPage({ navigation }) {
           {/* QUOTES HORIZONTAL */}
           <FlatList
             style={{ paddingTop: 10 }}
-            data={[{ key: "a" }, { key: "b" }]}
-            renderItem={({ item }) => <MyCard />}
+            data={ quote || []}
+            renderItem={({ item }) => <MyCard item={item}/>}
             horizontal={true}
             contentContainerStyle={styles.flatListContainer}
             pagingEnabled={true}

@@ -1,7 +1,9 @@
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import { Button } from "react-native-paper";
+import { useMainStore } from "../stores/mainStore";
 
 export default function MoodButton({ setMoodsRating, moodsRating, index, navigation, navigate }) {
+  const  getQuote = useMainStore((state) => state.getQuote)
   return (
     <Button
       icon={({ color, size }) => (
@@ -19,7 +21,8 @@ export default function MoodButton({ setMoodsRating, moodsRating, index, navigat
             })
             
             setMoodsRating([...prevMood])
-
+            getQuote()
+            console.log(prevMood)
             if(navigate){
               navigation.navigate("JournalPage", { mood: prevMood })
             }

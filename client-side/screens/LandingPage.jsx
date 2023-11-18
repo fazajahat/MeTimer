@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,11 +10,11 @@ import {
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Searchbar } from "react-native-paper";
-import Calendar from "./JournalPage";
+import JournalPage from "./JournalPage";
 import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
 
-export default function LandingPage() {
+export default function LandingPage({ navigation }) {
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-US", {
     weekday: "long",
@@ -22,26 +22,67 @@ export default function LandingPage() {
     month: "long",
   });
 
-  const moodEmotes = [
-    "emoticon-cry-outline",
-    "emoticon-cool-outline",
-    "emoticon-sick-outline",
-    "emoticon-excited-outline",
-    "emoticon-kiss-outline",
-  ];
+  const [moodsRating, setMoodsRating] = useState([
+    {
+      emote: "emoticon-cry-outline",
+      rating: 1,
+      color: "red",
+      pressed: false,
+      colorWhenPressed: "pink",
+      topText: 'What\'s making your day terrible?'
+    },
+    {
+      emote: "emoticon-cool-outline",
+      rating: 2,
+      color: "orange",
+      pressed: false,
+      colorWhenPressed: "pink",
+      topText: 'Why are you feeling down?'
+    },
+    {
+      emote: "emoticon-sick-outline",
+      rating: 3,
+      color: "yellow",
+      pressed: false,
+      colorWhenPressed: "pink",
+      topText: 'Is your day flat today?'
+    },
+    {
+      emote: "emoticon-excited-outline",
+      rating: 4,
+      color: "blue",
+      pressed: false,
+      colorWhenPressed: "pink",
+      topText: 'Having a good day?'
+    },
+    {
+      emote: "emoticon-kiss-outline",
+      rating: 5,
+      color: "green",
+      pressed: false,
+      colorWhenPressed: "pink",
+      topText: 'What\'s making your day awesome?'
+    },
+  ]);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.contentContainer}>
+
+          {/* DATE */}
           <View style={styles.dateContainer}>
             <Text style={styles.dateText}>{formattedDate}</Text>
           </View>
+
+          {/* TOP TITLE */}
           <Text
             style={Platform.OS === "ios" ? styles.iosText : styles.androidText}
           >
             Me Timer
           </Text>
+
+          {/* QUOTES HORIZONTAL */}
           <FlatList
             style={{ paddingTop: 10 }}
             data={[{ key: "a" }, { key: "b" }]}
@@ -50,6 +91,8 @@ export default function LandingPage() {
             contentContainerStyle={styles.flatListContainer}
             pagingEnabled={true}
           />
+
+          {/* MOOD TITLE */}
           <Text
             style={Platform.OS === "ios" ? styles.iosText : styles.androidText}
           >
@@ -58,13 +101,21 @@ export default function LandingPage() {
 
           {/* MOOD EMOTE BUTTONS */}
           <View style={styles.iconContainer}>
-            { moodEmotes.map(el => {
-              return <MoodButton name={el} />
+            {moodsRating.map((el, index) => {
+              return (
+                <MoodButton
+                  key={index + "journal"}
+                  navigation={navigation}
+                  moodsRating={moodsRating}
+                  index={index}
+                  setMoodsRating={setMoodsRating}
+                  navigate={true}
+                />
+              );
             })}
           </View>
 
         </View>
-        <Calendar />
       </ScrollView>
     </SafeAreaView>
   );

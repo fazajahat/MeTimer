@@ -1,18 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Alert,
-  Platform,
-} from "react-native";
-import {
-  TextInput,
-  Button,
-  Text,
-  Chip,
-} from "react-native-paper";
+import { StyleSheet, ScrollView, View, Alert, Platform } from "react-native";
+import { TextInput, Button, Text, Chip } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import * as Calendar from "expo-calendar";
+import MoodButton from "../components/MoodButton";
 
 async function getDefaultCalendarSource() {
   const defaultCalendar = await Calendar.getDefaultCalendarAsync();
@@ -54,10 +45,11 @@ async function createCalendar(playdate, teamname, location, diaryEntry) {
   });
 }
 
-export default function CalendarPage() {
+export default function CalendarPage({ navigation, route }) {
   const [diaryTitle, setDiaryTitle] = useState("");
   const [diaryEntry, setDiaryEntry] = useState("");
   const [diaryEntries, setDiaryEntries] = useState([]);
+  const [moodsRating, setMoodsRating] = useState(route.params.mood);
 
   // Using object because more faster when clicked than array
   const chipData = {
@@ -111,71 +103,103 @@ export default function CalendarPage() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container}>
 
-      {/* MOOD CHIPS */}
-      <View style={styles.chipWrapper}>
-        {Object.values(chipData).map((chip, index) => (
-          <Chip
-            key={index}
-            selected={selectedStates[index]}
-            showSelectedOverlay
-            style={styles.chip}
-            onPress={() => {
-              setSelectedStates({
-                ...selectedStates,
-                [index]: !selectedStates[index],
-              });
-            }}
-          >
-            {chip}
-          </Chip>
-        ))}
-      </View>
-
-      {/* JOURNAL TITLE */}
-      <TextInput
-        style={[styles.input]}
-        placeholder="The day I met my best friend"
-        returnKeyType="next"
-        value={diaryTitle}
-        onChangeText={(text) => setDiaryTitle(text)}
-        onSubmitEditing={() => journalContent.current.focus()}
-        blurOnSubmit={false}
-        label="Title"
-      />
-
-      {/* JOURNAL CONTENT */}
-      <TextInput
-        ref={journalContent}
-        style={[styles.input]}
-        multiline
-        numberOfLines={6}
-        placeholder="What's happening today?"
-        returnKeyType="emter"
-        value={diaryEntry}
-        onChangeText={(text) => setDiaryEntry(text)}
-        label="Journal Entry"
-      />
-
-      <Button mode="contained" onPress={() => console.log("Pressed")}>
-        Save to Diary
-      </Button>
-
-      {diaryEntries.map((entry) => (
-        <View key={entry.date} style={styles.diaryEntry}>
-          <Text>{entry.date}</Text>
-          <Text>{entry.entry}</Text>
+        {/* TOP TEXT */}
+        <View style={styles.topTextContainer}>
+          <Text style={styles.topText}>
+            {moodsRating.find((el) => el.pressed).topText}
+          </Text>
         </View>
-      ))}
-    </ScrollView>
+
+        {/* MOOD EMOTE BUTTONS */}
+        <View style={styles.iconContainer}>
+          {moodsRating.map((el, index) => {
+            return (
+              <MoodButton
+                key={index + "emote"}
+                navigation={navigation}
+                moodsRating={moodsRating}
+                index={index}
+                setMoodsRating={setMoodsRating}
+                navigate={false}
+              />
+            );
+          })}
+        </View>
+
+        {/* MOOD CHIPS */}
+        <View style={styles.chipWrapper}>
+          {Object.values(chipData).map((chip, index) => (
+            <Chip
+              key={index}
+              selected={selectedStates[index]}
+              showSelectedOverlay
+              style={styles.chip}
+              onPress={() => {
+                setSelectedStates({
+                  ...selectedStates,
+                  [index]: !selectedStates[index],
+                });
+              }}
+            >
+              {chip}
+            </Chip>
+          ))}
+        </View>
+
+        {/* JOURNAL TITLE */}
+        <TextInput
+          style={[styles.input]}
+          placeholder="The day I met my best friend"
+          returnKeyType="next"
+          value={diaryTitle}
+          onChangeText={(text) => setDiaryTitle(text)}
+          onSubmitEditing={() => journalContent.current.focus()}
+          blurOnSubmit={false}
+          label="Title"
+        />
+
+        {/* JOURNAL CONTENT */}
+        <TextInput
+          ref={journalContent}
+          style={[styles.input]}
+          multiline
+          numberOfLines={6}
+          placeholder="What's happening today?"
+          returnKeyType="emter"
+          value={diaryEntry}
+          onChangeText={(text) => setDiaryEntry(text)}
+          label="Journal Entry"
+        />
+
+        <Button mode="contained" onPress={() => console.log("Pressed")}>
+          Save to Diary
+        </Button>
+
+        {diaryEntries.map((entry) => (
+          <View key={entry.date} style={styles.diaryEntry}>
+            <Text>{entry.date}</Text>
+            <Text>{entry.entry}</Text>
+          </View>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  topText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    paddingTop: 15,
+  },
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
+    paddingTop: 10,
   },
   input: {
     minHeight: Platform.OS === "ios" ? 150 : 0,
@@ -198,10 +222,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 8,
-    marginBottom: 15,
+    marginBottom: 20,
   },
   chip: {
     minWidth: 10,
     alignSelf: "flex-start",
+  },
+  iconContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 25,
+    width: "100%",
+    marginLeft: 7,
+    marginBottom: 20,
   },
 });

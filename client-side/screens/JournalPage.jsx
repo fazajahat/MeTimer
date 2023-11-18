@@ -142,6 +142,7 @@ export default function CalendarPage({ navigation, route }) {
                   ...selectedStates,
                   [index]: !selectedStates[index],
                 });
+                console.log(selectedStates);
               }}
             >
               {chip}

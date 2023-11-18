@@ -1,0 +1,7 @@
+{
+    "1" : ["Depressed", "Hurt", "Lonely", "Embarassed", "Disappointed", "Abandoned", "Empty", "Isolated"],
+    "2" : ["Mad", "Let Down", "Annoyed", "Jealous", "Disrespected", "Bitter", "Aggressive", "Frustated"],
+    "3" : ["Bored", "Busy", "Stressed", "Tired", "Overwhelmed", "Exhausted", "Drained", "Burnt Out"],
+    "4" : ["Peaceful", "Relaxed", "Calm", "Content", "Tranquil", "Serene", "At Ease", "Easy"],
+    "5" : ["Happy", "Excited", "Proud", "Loved", "Hopeful", "Optimistic", "Confident", "Motivated"]
+}

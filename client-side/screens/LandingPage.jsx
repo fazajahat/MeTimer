@@ -1,21 +1,40 @@
 import React from "react";
-import { View, Text, ScrollView, FlatList, Platform } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Searchbar } from "react-native-paper";
-import Calendar from "./JournalPage"
+import Calendar from "./JournalPage";
 import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
 
 export default function LandingPage() {
   const currentDate = new Date();
-  const formattedDate = currentDate.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long' });
-  
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+
+  const moodEmotes = [
+    "emoticon-cry-outline",
+    "emoticon-cool-outline",
+    "emoticon-sick-outline",
+    "emoticon-excited-outline",
+    "emoticon-kiss-outline",
+  ];
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.contentContainer}>
-        <View style={styles.dateContainer}>
+          <View style={styles.dateContainer}>
             <Text style={styles.dateText}>{formattedDate}</Text>
           </View>
           <Text
@@ -36,15 +55,14 @@ export default function LandingPage() {
           >
             How was your mood today
           </Text>
+
+          {/* MOOD EMOTE BUTTONS */}
           <View style={styles.iconContainer}>
-
-          <MoodButton name="emoticon-cry-outline" />
-          <MoodButton name="emoticon-cool-outline" />
-          <MoodButton name="emoticon-sick-outline" />
-          <MoodButton name="emoticon-excited-outline" />
-          <MoodButton name="emoticon-kiss-outline" />
-
+            { moodEmotes.map(el => {
+              return <MoodButton name={el} />
+            })}
           </View>
+
         </View>
         <Calendar />
       </ScrollView>
@@ -83,12 +101,12 @@ const styles = StyleSheet.create({
   },
   dateContainer: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
   },
   dateText: {
     fontSize: 16,
-  }
+  },
 });

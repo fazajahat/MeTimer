@@ -16,7 +16,6 @@ export default Onboarding = ({ navigation }) => {
 
     // IF IT REACHED THE END OF THE SLIDES
     if (viewableItems[0].index === slides.length - 1) {
-      console.log("Reached the end of the slides");
       setEndPage(true);
     } else {
       setEndPage(false);

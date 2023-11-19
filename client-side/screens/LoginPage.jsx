@@ -3,6 +3,7 @@ import {
   View,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import React, { useState } from "react";
 import {
@@ -12,12 +13,14 @@ import {
   DefaultTheme,
 } from "react-native-paper";
 import Validator from "../helper/validators";
+import { useMainStore } from "../stores/mainStore";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
+  const login = useMainStore((state) => state.login);
 
-  const onLoginPressed = () => {
+  const onLoginPressed = async () => {
     const emailError = Validator.emailValidator(email.value);
     const passwordError = Validator.passwordValidator(password.value);
     setEmail({ ...email, error: emailError });
@@ -25,10 +28,22 @@ export default function LoginScreen({ navigation }) {
     if (emailError || passwordError) {
       return;
     }
+
+    try {
+    await login({
+      email: email.value,
+      password: password.value,
+    })
+    
     navigation.reset({
       index: 0,
       routes: [{ name: "LandingPage" }],
     });
+
+    } catch (error) {
+      Alert.alert(error)
+      console.log(error);
+    }
   };
 
   return (

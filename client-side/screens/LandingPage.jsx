@@ -5,7 +5,7 @@ import {
   ScrollView,
   FlatList,
   Platform,
-  KeyboardAvoidingView,
+  RefreshControl,
 } from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,13 +15,18 @@ import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
 
 export default function LandingPage({ navigation }) {
-  const getQuote = useMainStore((state) => state.getQuote)
-  const quote = useMainStore((state) => state.quote)
+  const getQuote = useMainStore((state) => state.getQuote);
+  const quote = useMainStore((state) => state.quote);
 
   useEffect(() => {
-    getQuote()
-    console.log(quote, "<<< data quote")
-  }, [])
+    getQuote();
+  }, []);
+
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    getQuote().then(() => setRefreshing(false));
+  }, []);
 
   const currentDate = new Date();
   const formattedDate = currentDate.toLocaleDateString("en-US", {
@@ -30,54 +35,14 @@ export default function LandingPage({ navigation }) {
     month: "long",
   });
 
-  const [moodsRating, setMoodsRating] = useState([
-    {
-      emote: "emoticon-cry-outline",
-      rating: 1,
-      color: "red",
-      pressed: false,
-      colorWhenPressed: "pink",
-      topText: 'What\'s making your day terrible?'
-    },
-    {
-      emote: "emoticon-cool-outline",
-      rating: 2,
-      color: "orange",
-      pressed: false,
-      colorWhenPressed: "pink",
-      topText: 'Why are you feeling down?'
-    },
-    {
-      emote: "emoticon-sick-outline",
-      rating: 3,
-      color: "yellow",
-      pressed: false,
-      colorWhenPressed: "pink",
-      topText: 'Is your day flat today?'
-    },
-    {
-      emote: "emoticon-excited-outline",
-      rating: 4,
-      color: "blue",
-      pressed: false,
-      colorWhenPressed: "pink",
-      topText: 'Having a good day?'
-    },
-    {
-      emote: "emoticon-kiss-outline",
-      rating: 5,
-      color: "green",
-      pressed: false,
-      colorWhenPressed: "pink",
-      topText: 'What\'s making your day awesome?'
-    },
-  ]);
-
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View style={styles.contentContainer}>
-
           {/* DATE */}
           <View style={styles.dateContainer}>
             <Text style={styles.dateText}>{formattedDate}</Text>
@@ -93,8 +58,8 @@ export default function LandingPage({ navigation }) {
           {/* QUOTES HORIZONTAL */}
           <FlatList
             style={{ paddingTop: 10 }}
-            data={ quote || []}
-            renderItem={({ item }) => <MyCard item={item}/>}
+            data={quote || []}
+            renderItem={({ item }) => <MyCard item={item} />}
             horizontal={true}
             contentContainerStyle={styles.flatListContainer}
             pagingEnabled={true}
@@ -108,20 +73,7 @@ export default function LandingPage({ navigation }) {
           </Text>
 
           {/* MOOD EMOTE BUTTONS */}
-          <View style={styles.iconContainer}>
-            {moodsRating.map((el, index) => {
-              return (
-                <MoodButton
-                  key={index + "journal"}
-                  navigation={navigation}
-                  moodsRating={moodsRating}
-                  index={index}
-                  setMoodsRating={setMoodsRating}
-                  navigate={true}
-                />
-              );
-            })}
-          </View>
+          <MoodButton toJournal={true} navigation={navigation} />
 
         </View>
       </ScrollView>

@@ -3,6 +3,7 @@ import {
   View,
   KeyboardAvoidingView,
   TouchableOpacity,
+  Alert
 } from "react-native";
 import React, { useState } from "react";
 import {
@@ -12,14 +13,16 @@ import {
   DefaultTheme,
 } from "react-native-paper";
 import Validator from "../helper/validators";
+import { useMainStore } from "../stores/mainStore";
 
 export default function SignupPage({ navigation }) {
   const [firstName, setFirstName] = useState({ value: "", error: "" });
   const [lastName, setLastName] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
+  const register = useMainStore((state) => state.register);
 
-  const onSignUpPressed = () => {
+  const onSignUpPressed = async () => {
     const firstNameError = Validator.firstnameValidator(firstName.value);
     const lastNameError = Validator.lastnameValidator(lastName.value);
     const emailError = Validator.emailValidator(email.value);
@@ -38,12 +41,22 @@ export default function SignupPage({ navigation }) {
     ) {
       return;
     }
-
+   try {
+    await register({
+      firstName: firstName.value,
+      lastName: lastName.value,
+      email: email.value,
+      password: password.value,
+    })
     // navigation.reset({
     //   index: 0,
     //   routes: [{ name: "Dashboard" }],
     // });
     navigation.replace("LoginPage");
+   } catch (error) {
+    Alert.alert(error)
+    console.log(error);
+   }
   };
 
   return (
@@ -144,6 +157,12 @@ export default function SignupPage({ navigation }) {
         <Text>Already have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace("LoginPage")}>
           <Text style={styles.link}>Login</Text>
+        </TouchableOpacity>
+
+        {/* TO SKIP FOR DEVELOPMENT */}
+        <Text> or </Text>
+        <TouchableOpacity onPress={() => navigation.replace("LandingPage")}>
+          <Text style={styles.link}>Skip</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

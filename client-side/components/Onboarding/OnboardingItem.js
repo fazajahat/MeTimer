@@ -4,10 +4,10 @@ import { View, Text, StyleSheet, Image, useWindowDimensions } from 'react-native
 export default OnboardingItem = ({ item }) => {
     const { width } = useWindowDimensions()
     return (
-        <View style={[styles.container, { width }]}>
+        <View style={[styles.container, { width, borderWidth: 1 }]}>
             {/* <Text>OnboardingItem</Text> */}
             <Image source={item.image} style={[styles.image, { width, resizeMode: 'contain' }]} />
-            <View style={{ flex: 0.3 }}>
+            <View style={{ flex: 0.3, borderWidth: 1 }}>
                 <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.description}>{item.description}</Text>
             </View>

@@ -13,7 +13,7 @@ import {
 } from "react-native-paper";
 import Validator from "../helper/validators";
 
-export default function LoginScreen({ navigation }) {
+export default function SignupPage({ navigation }) {
   const [firstName, setFirstName] = useState({ value: "", error: "" });
   const [lastName, setLastName] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -141,7 +141,7 @@ export default function LoginScreen({ navigation }) {
 
       <View style={styles.row}>
         <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("LoginScreen")}>
+        <TouchableOpacity onPress={() => navigation.replace("LoginPage")}>
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>

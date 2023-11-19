@@ -25,10 +25,10 @@ export default function LoginScreen({ navigation }) {
     if (emailError || passwordError) {
       return;
     }
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: "Dashboard" }],
-    // });
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "LandingPage" }],
+    });
   };
 
   return (
@@ -77,13 +77,13 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.description}>{password.error}</Text>
         ) : null}
       </View>
-      <View style={styles.forgotPassword}>
+      {/* <View style={styles.forgotPassword}>
         <TouchableOpacity
         // onPress={() => navigation.navigate("ResetPasswordScreen")}
         >
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <PaperButton
         style={[styles.button]}
         labelStyle={styles.text}
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    marginTop: 4,
+    marginTop: 10,
   },
   forgot: {
     fontSize: 13,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "100%",
-    marginVertical: 10,
+    marginVertical: 14,
     paddingVertical: 2,
   },
   text: {
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "100%",
-    marginVertical: 12,
+    marginVertical: 8,
   },
   container_bg: {
     flex: 1,

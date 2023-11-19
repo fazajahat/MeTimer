@@ -26,7 +26,7 @@ export default Onboarding = ({ navigation }) => {
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, borderWidth: 1 }}>
+      <View style={{ flex: 0.85 }}>
         <FlatList
           data={slides}
           renderItem={({ item }) => <OnboardingItem item={item} />}
@@ -47,18 +47,27 @@ export default Onboarding = ({ navigation }) => {
       </View>
 
       {/* FOOTER */}
-      <View style={styles.footerContainer}>
+      <View
+        style={
+          (styles.footerContainer, { borderColor: "blue" })
+        }
+      >
         <View style={styles.pagination}>
           <Pagination data={slides} scrollX={scrollX} />
         </View>
         <Button
           mode="contained"
-          onPress={() => navigation.navigate("SignupPage")}
+          onPress={() => {
+            if (endPage) {
+                return navigation.navigate("SignupPage");
+            }
+            slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
+          }}
           style={styles.button}
           labelStyle={styles.text}
-          disabled={!endPage}
+        //   disabled={!endPage}
         >
-          Get Started
+          Next
         </Button>
       </View>
     </View>
@@ -67,7 +76,7 @@ export default Onboarding = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   footerContainer: {
-    flex: 0.2,
+    flex: 0.3,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
@@ -79,17 +88,17 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: "bold",
-    fontSize: 15,
-    lineHeight: 26,
+    fontSize: 14,
+    lineHeight: 16,
   },
   button: {
-    marginVertical: 10,
-    paddingVertical: 2,
-    marginTop: 30,
+    paddingHorizontal: 0,
+    // marginLeft: 250,
+    marginLeft: "70%",
   },
   pagination: {
     position: "absolute",
-    bottom: 0,
+    top: 13,
     left: 0,
     right: 0,
     alignItems: "center",

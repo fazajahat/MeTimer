@@ -43,6 +43,7 @@ export default function SignupPage({ navigation }) {
     //   index: 0,
     //   routes: [{ name: "Dashboard" }],
     // });
+    navigation.replace("LoginPage");
   };
 
   return (
@@ -157,7 +158,7 @@ const styles = StyleSheet.create({
   },
   row: {
     flexDirection: "row",
-    marginTop: 4,
+    marginTop: 10,
   },
   forgot: {
     fontSize: 13,
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: "100%",
-    marginVertical: 10,
+    marginVertical: 8,
   },
   container_bg: {
     flex: 1,

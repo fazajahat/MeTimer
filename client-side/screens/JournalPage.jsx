@@ -169,7 +169,7 @@ export default function CalendarPage({ navigation, route }) {
           multiline
           numberOfLines={6}
           placeholder="What's happening today?"
-          returnKeyType="emter"
+          returnKeyType="default"
           value={diaryEntry}
           onChangeText={(text) => setDiaryEntry(text)}
           label="Journal Entry"

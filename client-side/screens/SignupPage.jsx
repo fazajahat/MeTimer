@@ -158,6 +158,12 @@ export default function SignupPage({ navigation }) {
         <TouchableOpacity onPress={() => navigation.replace("LoginPage")}>
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
+
+        {/* TO SKIP FOR DEVELOPMENT */}
+        <Text> or </Text>
+        <TouchableOpacity onPress={() => navigation.replace("LandingPage")}>
+          <Text style={styles.link}>Skip</Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );

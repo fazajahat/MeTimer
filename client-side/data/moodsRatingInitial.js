@@ -1,0 +1,42 @@
+export default moodsRating = [
+  {
+    emote: "emoticon-cry-outline",
+    rating: 1,
+    color: "#525da6",
+    pressed: false,
+    colorWhenPressed: "#8091ff",
+    topText: "What's making your day terrible?",
+  },
+  {
+    emote: "emoticon-sick-outline",
+    rating: 2,
+    color: "#5282a6",
+    pressed: false,
+    colorWhenPressed: "#7fc8ff",
+    topText: "Why are you feeling down?",
+  },
+  {
+    emote: "emoticon-cool-outline",
+    rating: 3,
+    color: "#52a0a6",
+    pressed: false,
+    colorWhenPressed: "#7ef6ff",
+    topText: "Is your day flat today?",
+  },
+  {
+    emote: "emoticon-excited-outline",
+    rating: 4,
+    color: "#52a692",
+    pressed: false,
+    colorWhenPressed: "#7dffe1",
+    topText: "Having a good day?",
+  },
+  {
+    emote: "emoticon-kiss-outline",
+    rating: 5,
+    color: "#52a659",
+    pressed: false,
+    colorWhenPressed: "#7fff8a",
+    topText: "What's making your day awesome?",
+  },
+];

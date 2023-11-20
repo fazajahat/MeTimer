@@ -24,7 +24,6 @@ export default function LandingPage({ navigation }) {
   const playSound = async () => {
     const { sound } = await Audio.Sound.createAsync({ uri: `https://5053-103-1-51-83.ngrok-free.app/public/music/${quote[0].voiceFile}` })
     setSound(sound);
-    console.log('Playing Sound');
     await sound.playAsync()
   }
 
@@ -97,10 +96,6 @@ export default function LandingPage({ navigation }) {
 
           {/* MOOD EMOTE BUTTONS */}
           <MoodButton toJournal={true} navigation={navigation} />
-          <View>
-            <Button title="Play Sound" onPress={playSound}
-            >Click Me</Button>
-          </View>
 
         </View>
       </ScrollView>

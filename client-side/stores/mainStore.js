@@ -8,6 +8,7 @@ const serverUrl = "https://5053-103-1-51-83.ngrok-free.app";
 
 export const useMainStore = create((set) => ({
   quote: [],
+  journalResponse: {},
   moodsRating: moodsRatingInitial,
   selectedMood: {
     emote: "emoticon-cool-outline",
@@ -46,6 +47,7 @@ export const useMainStore = create((set) => ({
         },
       });
       console.log(response);
+
       if (response) {
         set({ quote: [response] });
       }

@@ -32,7 +32,7 @@ export default Onboarding = ({ navigation }) => {
 
   function skip () {
     AsyncStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWI2OGYwNTg0YmFkZDYxMzhmYjcwYyIsImVtYWlsIjoiY21ua0BtYWlsLmNvbSIsImlhdCI6MTcwMDQ4OTQ3M30.VqXwCYx7AyeZBZUpiCQJG_vWH-OD991_y-VGMmss0UE");
-    navigation.replace("LandingPage")
+    navigation.replace("LandingPageTabs")
   }
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;

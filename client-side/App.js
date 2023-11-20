@@ -6,18 +6,32 @@ import LoginPage from "./screens/LoginPage";
 import SignupPage from "./screens/SignupPage";
 import JournalPage from "./screens/JournalPage";
 import Onboarding from "./components/Onboarding/Onboarding";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import NewsPage from "./screens/NewsPage";
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
+function LandingPageTabs() {
+  return (
+    <Tab.Navigator initialRouteName="LandingPageTabs" screenOptions={{headerShown: false}}>
+      {/* Define your bottom tab screens here */}
+      {/* <Tab.Screen name="Page1" component={Page1} /> */}
+      <Tab.Screen name="LandingPage" component={LandingPage} />
+      <Tab.Screen name="NewsPage" component={NewsPage} />
+    </Tab.Navigator>
+  );
+}
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Home"
-        screenOptions={{ headerShown: true }}
+        screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Onboarding" component={Onboarding} />
-        <Stack.Screen name="LandingPage" component={LandingPage} />
+        {/* <Stack.Screen name="LandingPage" component={LandingPage} /> */}
+        <Stack.Screen name="LandingPageTabs" component={LandingPageTabs} />
         <Stack.Screen name="JournalPage" component={JournalPage} />
         <Stack.Screen name="LoginPage" component={LoginPage} />
         <Stack.Screen name="SignupPage" component={SignupPage} />

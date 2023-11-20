@@ -10,6 +10,7 @@ const serverUrl = "https://movies.gjuniarto.com";
 export const useMainStore = create((set) => ({
     serverUrl: "https://movies.gjuniarto.com",
     quote: [],
+    records: [],
     journalResponse: {},
     moodsRating: moodsRatingInitial,
     selectedMood: {
@@ -73,7 +74,6 @@ export const useMainStore = create((set) => ({
             });
             console.log(response);
             await AsyncStorage.setItem("token", response.access_token);
-            console.log(res);
         } catch (error) {
             console.log(error, "<<<<<< login eror");
         }
@@ -89,6 +89,39 @@ export const useMainStore = create((set) => ({
             console.log(res);
         } catch (error) {
             console.log(error.response, "register main store");
+            throw error;
+        }
+    },
+    postJournal: async (data) => {
+        try {
+            await axios.post(`${serverUrl}/records`, data, { headers: { access_token: await AsyncStorage.getItem("token") } });
+        } catch (error) {
+            throw error;
+        }
+    },
+    getRecords: async () => {
+        try {
+            const { data: response } = await axios.get(`${serverUrl}/records`, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            console.log(response, "getRecord Log");
+            set({ records: response });
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    getJournalResponse: async (journal_content) => {
+        try {
+            const { data: journalResponse } = await axios({
+                method: "post",
+                url: `${serverUrl}/journalResponse`,
+                data: {
+                    journal_content
+                },
+                headers: { access_token: await AsyncStorage.getItem("token") }
+            });
+            set({ journalResponse });
+        } catch (error) {
+            console.log(error.response.data);
             throw error;
         }
     }

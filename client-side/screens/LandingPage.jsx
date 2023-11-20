@@ -11,16 +11,35 @@ import { Button } from "react-native-paper";
 
 export default function LandingPage({ navigation }) {
     const getQuote = useMainStore((state) => state.getQuote);
+    const getRecords = useMainStore((state) => state.getRecords);
+    const getJournalResponse = useMainStore((state) => state.getJournalResponse);
+
+    const journalResponse = useMainStore((state) => state.journalResponse);
+    const records = useMainStore((state) => state.records);
     const quote = useMainStore((state) => state.quote);
 
+    // mendapatkan records setelah itu baru quote dan journalResponse dari records index ke 0
+    const loadHomePage = async () => {
+        try {
+            await getRecords();
+            await getQuote(records[0].moods);
+            await getJournalResponse(records[0].Journal.content);
+            console.log(records, "<-- Records");
+            console.log(quote, "<-- Quote");
+            console.log(journalResponse, " <-- journal Response");
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     useEffect(() => {
-        getQuote();
+        loadHomePage();
     }, []);
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
-        getQuote().then(() => setRefreshing(false));
+        loadHomePage().then(() => setRefreshing(false));
     }, []);
 
     const currentDate = new Date();

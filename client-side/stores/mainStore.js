@@ -38,10 +38,16 @@ export const useMainStore = create((set) => ({
   },
   getQuote: async () => {
     try {
-      const response = await axios.get(`https://type.fit/api/quotes`);
-      if (response.data) {
-        set({ quote: response.data });
-        console.log("quote fetched");
+      const { data: response } = await axios({
+        url: `${serverUrl}/quotes`,
+        method: "GET",
+        headers: {
+          access_token: await AsyncStorage.getItem("token"),
+        },
+      });
+      console.log(response);
+      if (response) {
+        set({ quote: [response] });
       }
     } catch (error) {
       console.log(error);

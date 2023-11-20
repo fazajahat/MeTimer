@@ -98,9 +98,9 @@ export const useMainStore = create((set) => ({
             });
             console.log(quotes, "ini quotes");
             set({ quote: [quotes] });
-            const journal_content = records[0].Journal[0].content;
-            console.log(journal_content, "ini Journal content");
             if (records.length !== 0) {
+                console.log(journal_content, "ini Journal content");
+                const journal_content = records[0].Journal[0].content;
                 const { data: journalResponse } = await axios({
                     method: "post",
                     url: `${serverUrl}/journalResponse`,

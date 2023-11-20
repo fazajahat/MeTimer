@@ -30,16 +30,16 @@ export default function LoginScreen({ navigation }) {
     }
 
     try {
-    await login({
-      email: email.value,
-      password: password.value,
-    })
-    
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "LandingPage" }],
-    });
+      await login({
+        email: email.value,
+        password: password.value,
+      })
 
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "LandingPage" }],
+      });
+      Alert.alert("Login successful.")
     } catch (error) {
       Alert.alert(error)
       console.log(error);

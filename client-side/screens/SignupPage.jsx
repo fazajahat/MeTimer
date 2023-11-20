@@ -53,6 +53,7 @@ export default function SignupPage({ navigation }) {
     //   routes: [{ name: "Dashboard" }],
     // });
     navigation.replace("LoginPage");
+    Alert.alert("Account created successfully. Please login to continue.")
    } catch (error) {
     Alert.alert(error)
     console.log(error);

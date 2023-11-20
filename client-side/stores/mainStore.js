@@ -40,16 +40,18 @@ export const useMainStore = create((set) => ({
       console.log(error);
     }
   },
-  login: async (email, password) => {
+  login: async ({ email, password }) => {
     try {
-      const res = await axios.post(`${serverUrl}/login`, {
+      console.log(email, password);
+      const { data: response } = await axios.post(`${serverUrl}/login`, {
         email,
         password,
       });
-      await AsyncStorage.setItem("token", res.data.token);
+      console.log(response);
+      await AsyncStorage.setItem("token", response.access_token);
       console.log(res);
     } catch (error) {
-      console.log(error);
+      console.log(error, "<<<<<< login eror");
     }
   },
   register: async (data) => {

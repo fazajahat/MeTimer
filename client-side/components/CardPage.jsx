@@ -13,8 +13,7 @@ export default function CardPage({ item }) {
     <Card.Content style={{ width: 345 }}>
      <View style={styles.textContainer}>
       <Text variant="titleLarge" style={{ color: 'white'}}>Quotes of the day</Text>
-      <Text variant="bodyMedium" style={{ paddingTop: 10, color: 'white'}}>{ item.text }</Text>
-      <Text variant="bodyMedium" style={{ color: 'white'}}>Author: { item.author }</Text>
+      <Text variant="bodyMedium" style={{ paddingTop: 10, color: 'white'}}>{ item.quote }</Text>
      </View>
     </Card.Content>
     </ImageBackground>

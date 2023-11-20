@@ -3,8 +3,9 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moodsRatingInitial from "../data/moodsRatingInitial";
 import chipsData from "../data/chipsData";
+import emotions from "../data/emotions";
 const baseUrl = "http://10.0.2.2:3000";
-const serverUrl = "https://5053-103-1-51-83.ngrok-free.app";
+const serverUrl = "https://d9d8-103-165-209-194.ngrok-free.app";
 
 export const useMainStore = create((set) => ({
   quote: [],
@@ -15,10 +16,17 @@ export const useMainStore = create((set) => ({
     rating: 3,
     color: "#52a0a6",
     pressed: false,
-    colorWhenPressed: "#7ef6ff",
+    colorWhenPressed: "#52a0a6",
     topText: "How are you feeling today?",
   },
-  chipsData: chipsData,
+  chipsData: emotions,
+  toggleChips: (rating, chip) => {
+    set((state) => {
+      const newChipsData = {...state.chipsData};
+      newChipsData[rating][chip] = !newChipsData[rating][chip]
+      return { chipsData: newChipsData };
+    });
+  },
   specialSetter: (key, payload) => {
     set((state) => {
       return { [key]: payload };
@@ -79,7 +87,8 @@ export const useMainStore = create((set) => ({
       });
       console.log(res);
     } catch (error) {
-      console.log(error);
+      console.log(error.response, 'register main store');
+      throw(error)
     }
   },
 }));

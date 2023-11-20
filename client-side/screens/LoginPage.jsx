@@ -41,8 +41,8 @@ export default function LoginScreen({ navigation }) {
       });
       Alert.alert("Login successful.")
     } catch (error) {
-      Alert.alert(error)
       console.log(error);
+      Alert.alert('Error', error.response.data.message)
     }
   };
 

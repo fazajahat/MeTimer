@@ -59,10 +59,9 @@ export default function NewsPage() {
       <ScrollView>
         <Text style={styles.newsTopText}>News Section</Text>
 
-        {news.map((el,index) => {
-          return <NewsCard key={index + 'news'} news={el} />;
+        {news.map((el, index) => {
+          return <NewsCard key={index + "news"} news={el} />;
         })}
-
       </ScrollView>
     </SafeAreaView>
   );

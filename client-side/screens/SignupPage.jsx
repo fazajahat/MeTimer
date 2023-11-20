@@ -48,10 +48,6 @@ export default function SignupPage({ navigation }) {
       email: email.value,
       password: password.value,
     })
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: "Dashboard" }],
-    // });
     navigation.replace("LoginPage");
     Alert.alert("Account created successfully. Please login to continue.")
    } catch (error) {

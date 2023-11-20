@@ -78,6 +78,45 @@ export const useMainStore = create((set) => ({
             console.log(error, "<<<<<< login eror");
         }
     },
+    loadHomepage: async () => {
+        try {
+            const { data: records } = await axios.get(`${serverUrl}/records`, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            console.log(records, "getRecord Log");
+            set({ records });
+
+            const moods = records.length ? records[0].moods : records;
+            console.log(moods, "ini moods");
+            const { data: quotes } = await axios({
+                url: `${serverUrl}/quotes`,
+                method: "post",
+                data: {
+                    moods
+                },
+                headers: {
+                    access_token: await AsyncStorage.getItem("token")
+                }
+            });
+            console.log(quotes, "ini quotes");
+            set({ quote: [quotes] });
+            const journal_content = records[0].Journal[0].content;
+            console.log(journal_content, "ini Journal content");
+            if (records.length !== 0) {
+                const { data: journalResponse } = await axios({
+                    method: "post",
+                    url: `${serverUrl}/journalResponse`,
+                    data: {
+                        journal_content
+                    },
+                    headers: { access_token: await AsyncStorage.getItem("token") }
+                });
+                console.log(journalResponse);
+                set({ journalResponse });
+            }
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
     register: async (data) => {
         try {
             const res = await axios.post(`${serverUrl}/register`, {

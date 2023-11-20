@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Calendar from "expo-calendar";
 import MoodButton from "../components/MoodButton";
 import { useMainStore } from "../stores/mainStore";
+import MoodChips from "../components/MoodChips";
 
 async function getDefaultCalendarSource() {
   const defaultCalendar = await Calendar.getDefaultCalendarAsync();
@@ -52,28 +53,6 @@ export default function CalendarPage({ navigation }) {
   const [diaryEntries, setDiaryEntries] = useState([]);
   const selectedMood = useMainStore((state) => state.selectedMood);
 
-  // Using object because more faster when clicked than array
-  const chipData = {
-    0: "Depressed",
-    1: "Happy",
-    2: "Excited",
-    3: "Sad",
-    4: "Angry",
-    5: "Anxious",
-    6: "Confused",
-    7: "Disappointed",
-    8: "Scared",
-    9: "Surprised",
-    10: "Calm",
-    11: "Bored",
-    12: "Nervous",
-    13: "Relieved",
-    14: "Stressed",
-  };
-  const [selectedStates, setSelectedStates] = useState(
-    Object.fromEntries(Object.entries(chipData).map(([key]) => [key, false]))
-  );
-
   const journalContent = useRef();
 
   useEffect(() => {
@@ -108,34 +87,14 @@ export default function CalendarPage({ navigation }) {
       <ScrollView style={styles.container}>
         {/* TOP TEXT */}
         <View style={styles.topTextContainer}>
-          <Text style={styles.topText}>
-            {selectedMood.topText}
-          </Text>
+          <Text style={styles.topText}>{selectedMood.topText}</Text>
         </View>
 
         {/* MOOD EMOTE BUTTONS */}
         <MoodButton toJournal={false} navigation={navigation} />
 
         {/* MOOD CHIPS */}
-        <View style={styles.chipWrapper}>
-          {Object.values(chipData).map((chip, index) => (
-            <Chip
-              key={index}
-              selected={selectedStates[index]}
-              showSelectedOverlay
-              style={styles.chip}
-              onPress={() => {
-                setSelectedStates({
-                  ...selectedStates,
-                  [index]: !selectedStates[index],
-                });
-                console.log(selectedStates);
-              }}
-            >
-              {chip}
-            </Chip>
-          ))}
-        </View>
+        <MoodChips/>
 
         {/* JOURNAL TITLE */}
         <TextInput

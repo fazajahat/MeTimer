@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moodsRatingInitial from "../data/moodsRatingInitial";
+import chipsData from "../data/chipsData";
 const baseUrl = "http://10.0.2.2:3000";
 const serverUrl = "https://5053-103-1-51-83.ngrok-free.app";
 
@@ -15,6 +16,12 @@ export const useMainStore = create((set) => ({
     pressed: false,
     colorWhenPressed: "#7ef6ff",
     topText: "How are you feeling today?",
+  },
+  chipsData: chipsData,
+  specialSetter: (key, payload) => {
+    set((state) => {
+      return { [key]: payload };
+    });
   },
   toggleMoodsRating: (idx) => {
     set((state) => {

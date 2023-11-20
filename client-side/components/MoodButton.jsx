@@ -1,9 +1,10 @@
+import React, { memo } from "react";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import { Button } from "react-native-paper";
 import { useMainStore } from "../stores/mainStore";
 import { StyleSheet, View } from "react-native";
 
-export default function MoodButton({ toJournal, navigation }) {
+function MoodButton({ toJournal, navigation }) {
   const getQuote = useMainStore((state) => state.getQuote);
   const moodsRating = useMainStore((state) => state.moodsRating);
   const toggleMoodsRating = useMainStore((state) => state.toggleMoodsRating);
@@ -38,6 +39,7 @@ export default function MoodButton({ toJournal, navigation }) {
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -50,3 +52,5 @@ const styles = StyleSheet.create({
     marginLeft: 7,
   },
 });
+
+export default memo(MoodButton);

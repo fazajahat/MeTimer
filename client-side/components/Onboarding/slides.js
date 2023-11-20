@@ -1,20 +1,20 @@
 export default [
     {
         id: '1',
-        title: 'Quick & Easy Payments',
-        description: 'Grow your business by accepting card payments with the new card reader.',
-        image: require('../../assets/images/creditcard.png')
+        title: 'Meditate yourself',
+        description: 'Make your mind calm and peaceful with meditation.',
+        image: require('../../assets/images/meditation.png')
     },
     {
         id: '2',
-        title: 'Smart Point of Sale',
-        description: 'Complete point of sale software tailored to your business needs.',
-        image: require('../../assets/images/computer.png')
+        title: 'Write your journal',
+        description: 'Write your journal and keep track of your progress.',
+        image: require('../../assets/images/journal.png')
     },
     {
         id: '3',
-        title: 'Instant Notifications',
-        description: 'Instant notifications let your quickly see new purchases and messages.',
-        image: require('../../assets/images/notifications.png')
+        title: 'Mood tracker',
+        description: 'Track your mood and see your progress over time.',
+        image: require('../../assets/images/mood.png')
     }
 ]

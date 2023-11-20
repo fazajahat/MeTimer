@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation }) {
 
       navigation.reset({
         index: 0,
-        routes: [{ name: "LandingPage" }],
+        routes: [{ name: "LandingPageTabs" }],
       });
       Alert.alert("Login successful.")
     } catch (error) {

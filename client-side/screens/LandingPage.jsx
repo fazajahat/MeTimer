@@ -22,7 +22,7 @@ export default function LandingPage({ navigation }) {
   const [sound, setSound] = useState();
 
   const playSound = async () => {
-    const { sound } = await Audio.Sound.createAsync({ uri: `https://5053-103-1-51-83.ngrok-free.app/public/music/${quote[0].voiceFile}` })
+    const { sound } = await Audio.Sound.createAsync({ uri: `https://d9d8-103-165-209-194.ngrok-free.app/public/music/${quote[0].voiceFile}` })
     setSound(sound);
     console.log('Playing Sound');
     await sound.playAsync()

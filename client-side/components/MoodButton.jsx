@@ -5,8 +5,8 @@ import { useMainStore } from "../stores/mainStore";
 import { StyleSheet, View } from "react-native";
 
 function MoodButton({ toJournal, navigation }) {
-  const getQuote = useMainStore((state) => state.getQuote);
   const moodsRating = useMainStore((state) => state.moodsRating);
+  const selectedMood = useMainStore((state) => state.selectedMood);
   const toggleMoodsRating = useMainStore((state) => state.toggleMoodsRating);
   const seletedMood = useMainStore((state) => state.selectedMood);
   return (
@@ -21,12 +21,11 @@ function MoodButton({ toJournal, navigation }) {
                 size={50}
                 color={
                   moodsRating[index].rating == seletedMood.rating
-                    ? moodsRating[index].colorWhenPressed
+                    ? selectedMood.colorWhenPressed
                     : moodsRating[index].color
                 }
                 onPress={() => {
                   toggleMoodsRating(index);
-                  // getQuote()
                   if (toJournal) {
                     navigation.navigate("JournalPage");
                   }
@@ -50,6 +49,7 @@ const styles = StyleSheet.create({
     paddingTop: 25,
     width: "100%",
     marginLeft: 7,
+    marginBottom: 20,
   },
 });
 

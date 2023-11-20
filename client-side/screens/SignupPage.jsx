@@ -55,8 +55,7 @@ export default function SignupPage({ navigation }) {
     navigation.replace("LoginPage");
     Alert.alert("Account created successfully. Please login to continue.")
    } catch (error) {
-    Alert.alert(error)
-    console.log(error);
+    Alert.alert('Error', error.response.data.message)
    }
   };
 

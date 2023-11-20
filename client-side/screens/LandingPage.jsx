@@ -13,13 +13,36 @@ import { useEffect } from "react";
 import { useMainStore } from "../stores/mainStore";
 import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
+import { Audio } from "expo-av";
+import { Button } from "react-native-paper";
 
 export default function LandingPage({ navigation }) {
   const getQuote = useMainStore((state) => state.getQuote);
   const quote = useMainStore((state) => state.quote);
+  const [sound, setSound] = useState();
+
+  const playSound = async () => {
+    const { sound } = await Audio.Sound.createAsync({ uri: `https://5053-103-1-51-83.ngrok-free.app/public/music/${quote[0].voiceFile}` })
+    setSound(sound);
+    console.log('Playing Sound');
+    await sound.playAsync()
+  }
 
   useEffect(() => {
-    getQuote();
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
+  const awaitQuote = async () => {
+    await getQuote();
+    console.log(quote, "landing page");
+  }
+  useEffect(() => {
+    awaitQuote();
   }, []);
 
   const [refreshing, setRefreshing] = useState(false);
@@ -74,6 +97,10 @@ export default function LandingPage({ navigation }) {
 
           {/* MOOD EMOTE BUTTONS */}
           <MoodButton toJournal={true} navigation={navigation} />
+          <View>
+            <Button title="Play Sound" onPress={playSound}
+            >Click Me</Button>
+          </View>
 
         </View>
       </ScrollView>

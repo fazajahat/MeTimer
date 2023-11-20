@@ -2,7 +2,6 @@ import { create } from "zustand";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moodsRatingInitial from "../data/moodsRatingInitial";
-const baseUrl = "http://10.0.2.2:3000";
 const serverUrl = "https://5053-103-1-51-83.ngrok-free.app";
 
 export const useMainStore = create((set) => ({
@@ -31,10 +30,16 @@ export const useMainStore = create((set) => ({
   },
   getQuote: async () => {
     try {
-      const response = await axios.get(`https://type.fit/api/quotes`);
-      if (response.data) {
-        set({ quote: response.data });
-        console.log("quote fetched");
+      const { data: response } = await axios({
+        url: `${serverUrl}/quotes`,
+        method: "GET",
+        headers: {
+          access_token: await AsyncStorage.getItem("token"),
+        },
+      });
+      console.log(response);
+      if (response) {
+        set({ quote: [response] });
       }
     } catch (error) {
       console.log(error);

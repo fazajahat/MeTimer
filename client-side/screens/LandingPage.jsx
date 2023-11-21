@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useMainStore } from "../stores/mainStore";
 import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
+import CardHistory from "../components/CardHistory";
 import { Audio } from "expo-av";
 import { Button } from "react-native-paper";
 
@@ -101,7 +102,9 @@ export default function LandingPage({ navigation }) {
             <Button title="Play Sound" onPress={playSound}
             >Click Me</Button>
           </View>
-
+          
+            {/* CARD HISTORY */}
+            <CardHistory />
         </View>
       </ScrollView>
     </SafeAreaView>

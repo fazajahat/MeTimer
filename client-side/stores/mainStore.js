@@ -24,6 +24,7 @@ export const useMainStore = create((set) => ({
         topText: "How are you feeling today?"
     },
     chipsData: emotions,
+    chatLogs: [],
     toggleChips: (rating, chip) => {
         set((state) => {
             const newChipsData = { ...state.chipsData };
@@ -88,7 +89,7 @@ export const useMainStore = create((set) => ({
                 headers: { access_token: await AsyncStorage.getItem("token") }
             });
             console.log(records, "getRecord Log");
-            set({ records, recordChart: records.map(el => el.rateMood) });
+            set({ records, recordChart: records.map((el) => el.rateMood) });
 
             const moods = records.length ? records[0].moods : 0;
             console.log(moods, "ini moods");
@@ -155,7 +156,7 @@ export const useMainStore = create((set) => ({
                 headers: { access_token: await AsyncStorage.getItem("token") }
             });
             console.log(response, "getRecord Log");
-            set({ records: response, recordChart: response.map(el => el.rateMood) });
+            set({ records: response, recordChart: response.map((el) => el.rateMood) });
         } catch (error) {
             throw error;
         }
@@ -175,6 +176,23 @@ export const useMainStore = create((set) => ({
         } catch (error) {
             console.log(error.response.data);
             throw error;
+        }
+    },
+
+    getChatLogs: async () => {
+        try {
+            const { data: chatLogs } = await axios.get(`${serverUrl}/chatLogs`, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            set({ chatLogs });
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    postChatLogs: async (chat) => {
+        try {
+            const { data: chatLogs } = await axios.post(`${serverUrl}/chatLogs`, { chat }, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            set({ chatLogs });
+        } catch (error) {
+            console.log(error);
         }
     }
 }));

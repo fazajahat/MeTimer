@@ -6,6 +6,7 @@ import LoginPage from "./screens/LoginPage";
 import SignupPage from "./screens/SignupPage";
 import JournalPage from "./screens/JournalPage";
 import Onboarding from "./components/Onboarding/Onboarding";
+import ChatFromAi from "./components/ChatOpenAi";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import NewsPage from "./screens/NewsPage";
 import { Ionicons } from "@expo/vector-icons";
@@ -54,8 +55,8 @@ export default function App() {
         initialRouteName="Home"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="ChatOpenAi" component={ChatFromAi} />
         <Stack.Screen name="Onboarding" component={Onboarding} />
-        {/* <Stack.Screen name="LandingPage" component={LandingPage} /> */}
         <Stack.Screen name="LandingPageTabs" component={LandingPageTabs} />
         <Stack.Screen name="JournalPage" component={JournalPage} />
         <Stack.Screen name="LoginPage" component={LoginPage} />

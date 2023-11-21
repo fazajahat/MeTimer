@@ -46,10 +46,11 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingTop: 25,
+    paddingTop: 20,
+    paddingBottom: 20,
     width: "100%",
     marginLeft: 7,
-    marginBottom: 20,
+    // marginBottom: 20,
   },
 });
 

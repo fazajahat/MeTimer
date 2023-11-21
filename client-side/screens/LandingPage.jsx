@@ -14,6 +14,7 @@ export default function LandingPage({ navigation }) {
     const headers = useMainStore((state) => state.headers);
 
     // mendapatkan records setelah itu baru quote dan journalResponse dari records index ke 0
+    
 
     useEffect(() => {
         loadHomepage();
@@ -36,14 +37,14 @@ export default function LandingPage({ navigation }) {
         <SafeAreaView style={styles.container}>
             <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <View style={styles.contentContainer}>
+
+                    {/* TOP TITLE */}
+                    <Text style={[Platform.OS === "ios" ? styles.iosText : styles.androidText, {paddingVertical: 15}]}>Me Timer</Text>
+
                     {/* DATE */}
                     <View style={styles.dateContainer}>
                         <Text style={styles.dateText}>{formattedDate}</Text>
                     </View>
-
-                    {/* TOP TITLE */}
-                    <Text style={Platform.OS === "ios" ? styles.iosText : styles.androidText}>Me Timer</Text>
-
                     {/* QUOTES HORIZONTAL */}
                     <FlatList
                         style={{ paddingTop: 10 }}
@@ -61,7 +62,8 @@ export default function LandingPage({ navigation }) {
                     <MoodButton toJournal={true} navigation={navigation} />
 
                     {/* CARD HISTORY */}
-                    <CardHistory />
+                    {records.map(el => <CardHistory data={el} />)}
+                    
                 </View>
             </ScrollView>
         </SafeAreaView>
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
     androidText: {
         fontFamily: "Roboto",
         fontSize: 16,
-        fontWeight: "400"
+        fontWeight: "400",
     },
     dateContainer: {
         borderWidth: 1,

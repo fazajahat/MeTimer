@@ -45,6 +45,16 @@ function LandingPageTabs() {
           ),
         }}
       />
+      <Tab.Screen
+        name="ChatAi"
+        component={ChatFromAi}
+        options={{
+          tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="happy-outline" color={color} size={27} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -52,11 +62,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="Onboarding"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="ChatOpenAi" component={ChatFromAi} />
         <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen name="ChatOpenAi" component={ChatFromAi} />
         <Stack.Screen name="LandingPageTabs" component={LandingPageTabs} />
         <Stack.Screen name="JournalPage" component={JournalPage} />
         <Stack.Screen name="LoginPage" component={LoginPage} />

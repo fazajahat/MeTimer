@@ -11,9 +11,8 @@ import axios from "axios";
 
 export default function ChatFromAi() {
   const [data, setData] = useState([]);
-  const apiKey = "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";
-  const apiUrl =
-    "https://api.openai.com/v1/engines/text-davinci-002/completions";
+  const apiKey = "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";
+  const apiUrl = "https://api.openai.com/v1/engines/text-davinci-002/completions";
   const [textInput, setTextInput] = useState("");
 
   const handlerInput = async () => {

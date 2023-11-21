@@ -11,7 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import NewsPage from "./screens/NewsPage";
 import { Ionicons, Entypo, FontAwesome } from "@expo/vector-icons";
 import ProfilePage from "./screens/ProfilePage";
-import HistoryPage from "./screens/Historypage";
+import HistoryPage from "./screens/HistoryPage";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

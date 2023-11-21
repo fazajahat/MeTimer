@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { StyleSheet, ScrollView, View, Alert, Platform } from "react-native";
-import { TextInput, Button, Text, Chip } from "react-native-paper";
+import { TextInput, Button, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Calendar from "expo-calendar";
 import MoodButton from "../components/MoodButton";
@@ -102,12 +102,13 @@ export default function CalendarPage({ navigation }) {
                 </View>
 
                 {/* MOOD EMOTE BUTTONS */}
-                {/* <MoodButton toJournal={false} navigation={navigation} /> */}
                 <MoodButtonNew toJournal={false} navigation={navigation} />
 
 
                 {/* MOOD CHIPS */}
                 <MoodChips />
+
+                <Text style={{marginBottom: 5, fontSize: 16, marginTop: 20}}>Describe what happened today..</Text>
 
                 {/* JOURNAL TITLE */}
                 <TextInput
@@ -121,6 +122,8 @@ export default function CalendarPage({ navigation }) {
                     onSubmitEditing={() => journalContent.current.focus()}
                     blurOnSubmit={false}
                     label="Title"
+                    
+                    placeholderTextColor="#a0a0a0"
                 />
 
                 {/* JOURNAL CONTENT */}
@@ -135,6 +138,7 @@ export default function CalendarPage({ navigation }) {
                     mode="outlined"
                     onChangeText={(text) => setDiaryEntry(text)}
                     label="Journal Entry"
+                    placeholderTextColor="#a0a0a0"
                 />
 
                 <Button mode="contained" onPress={submitJournal}>

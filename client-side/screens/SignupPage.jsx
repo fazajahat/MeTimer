@@ -23,8 +23,11 @@ export default function SignupPage({ navigation }) {
   const register = useMainStore((state) => state.register);
   const [loginError, setLoginError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const loading = useMainStore((state) => state.loading);
+  const specialSetter = useMainStore((state) => state.specialSetter);
 
   const onSignUpPressed = async () => {
+    specialSetter("loading", true);
     const firstNameError = Validator.firstnameValidator(firstName.value);
     const lastNameError = Validator.lastnameValidator(lastName.value);
     const emailError = Validator.emailValidator(email.value);
@@ -36,6 +39,7 @@ export default function SignupPage({ navigation }) {
 
     // INTERCEPT IF ANY VALIDATION FAILS
     if (firstNameError || lastNameError || emailError || passwordError) {
+      specialSetter("loading", false);
       return;
     }
     try {
@@ -49,12 +53,14 @@ export default function SignupPage({ navigation }) {
       //   index: 0,
       //   routes: [{ name: "Dashboard" }],
       // });
-      navigation.replace("LoginPage");
       Alert.alert("Account created successfully. Please login to continue.");
+      navigation.replace("LoginPage");
       setLoginError("");
     } catch (error) {
-      Alert.alert("Error", error.response.data.message);
+      // Alert.alert("Error", error.response.data.message);
       setLoginError(error.response.data.message);
+    } finally {
+      specialSetter("loading", false);
     }
   };
 
@@ -157,6 +163,8 @@ export default function SignupPage({ navigation }) {
         onPress={onSignUpPressed}
         style={[{ marginTop: 24 }, styles.button]}
         labelStyle={styles.text}
+        loading={loading}
+        disabled={loading}
       >
         Sign Up
       </PaperButton>

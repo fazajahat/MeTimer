@@ -9,6 +9,7 @@ const serverUrl = "https://movies.gjuniarto.com";
 export const useMainStore = create((set) => ({
     serverUrl: "https://movies.gjuniarto.com",
     loading: false,
+    chatLoading: false,
     headers: [],
     quote: [],
     records: [],
@@ -181,10 +182,13 @@ export const useMainStore = create((set) => ({
 
     getChatLogs: async () => {
         try {
+            set({ chatLoading: true });
             const { data: chatLogs } = await axios.get(`${serverUrl}/chatLogs`, { headers: { access_token: await AsyncStorage.getItem("token") } });
             set({ chatLogs });
         } catch (error) {
             console.log(error);
+        } finally {
+            set({ chatLoading: false });
         }
     },
     postChatLogs: async (chat) => {

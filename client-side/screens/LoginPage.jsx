@@ -121,6 +121,7 @@ export default function LoginScreen({ navigation }) {
         labelStyle={styles.text}
         mode={"contained"}
         onPress={onLoginPressed}
+        disabled={loading}
         loading={loading}
       >
         Login

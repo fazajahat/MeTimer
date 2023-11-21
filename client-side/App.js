@@ -8,7 +8,7 @@ import JournalPage from "./screens/JournalPage";
 import Onboarding from "./components/Onboarding/Onboarding";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import NewsPage from "./screens/NewsPage";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -17,16 +17,20 @@ function LandingPageTabs() {
   return (
     <Tab.Navigator
       initialRouteName="LandingPageTabs"
-      screenOptions={{ headerShown: false, tabBarStyle: {
-        paddingBottom: 20,
-      } }}
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          height: 60,
+        },
+      }}
     >
-      <Tab.Screen 
-        name="Home" 
-        component={LandingPage} 
+      <Tab.Screen
+        name="Home"
+        component={LandingPage}
         options={{
+          tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="happy-outline" color={color} size={size} />
+            <Ionicons name="happy-outline" color={color} size={27} />
           ),
         }}
       />
@@ -34,8 +38,9 @@ function LandingPageTabs() {
         name="News"
         component={NewsPage}
         options={{
+          tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="newspaper" color={color} size={size} />
+            <Ionicons name="newspaper" color={color} size={27} />
           ),
         }}
       />

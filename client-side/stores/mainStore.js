@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moodsRatingInitial from "../data/moodsRatingInitial";
-import emotions from "../data/emotions";
+import emotions from "../data/emotions.json";
 
 const serverUrl = "https://movies.gjuniarto.com";
 
@@ -70,6 +70,7 @@ export const useMainStore = create((set) => ({
                 email,
                 password
             });
+            console.log(response.access_token, "ini token");
             await AsyncStorage.setItem("token", response.access_token);
         } catch (error) {
             console.log(error.response, "register main store");
@@ -84,7 +85,7 @@ export const useMainStore = create((set) => ({
             console.log(records, "getRecord Log");
             set({ records });
 
-            const moods = records.length ? records[0].moods : records;
+            const moods = records.length ? records[0].moods : 0;
             console.log(moods, "ini moods");
             const { data: quotes } = await axios({
                 url: `${serverUrl}/quotes`,

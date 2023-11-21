@@ -12,9 +12,8 @@ import { Button } from "react-native-paper";
 
 export default function LandingPage({ navigation }) {
     const loadHomepage = useMainStore((state) => state.loadHomepage);
-    const journalResponse = useMainStore((state) => state.journalResponse);
     const records = useMainStore((state) => state.records);
-    const quote = useMainStore((state) => state.quote);
+    const headers = useMainStore((state) => state.headers);
 
     // mendapatkan records setelah itu baru quote dan journalResponse dari records index ke 0
 
@@ -50,8 +49,8 @@ export default function LandingPage({ navigation }) {
                     {/* QUOTES HORIZONTAL */}
                     <FlatList
                         style={{ paddingTop: 10 }}
-                        data={quote || []}
-                        renderItem={({ item }) => <MyCard item={item} />}
+                        data={headers || []}
+                        renderItem={({ item, index }) => <MyCard item={item} index={index} />}
                         horizontal={true}
                         contentContainerStyle={styles.flatListContainer}
                         pagingEnabled={true}

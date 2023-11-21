@@ -2,51 +2,51 @@ import { create } from "zustand";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moodsRatingInitial from "../data/moodsRatingInitial";
-import chipsData from "../data/chipsData";
 import emotions from "../data/emotions";
-const baseUrl = "http://10.0.2.2:3000";
+
 const serverUrl = "https://movies.gjuniarto.com";
 
 export const useMainStore = create((set) => ({
-  serverUrl: "https://movies.gjuniarto.com",
-  quote: [],
-  records: [],
-  journalResponse: {},
-  moodsRating: moodsRatingInitial,
-  selectedMood: {
-    emote: "emoticon-cool-outline",
-    rating: 3,
-    color: "#52a0a6",
-    pressed: false,
-    colorWhenPressed: "#52a0a6",
-    topText: "How are you feeling today?",
-  },
-  chipsData: emotions,
-  toggleChips: (rating, chip) => {
-    set((state) => {
-      const newChipsData = { ...state.chipsData };
-      newChipsData[rating][chip] = !newChipsData[rating][chip];
-      return { chipsData: newChipsData };
-    });
-  },
-  specialSetter: (key, payload) => {
-    set((state) => {
-      return { [key]: payload };
-    });
-  },
-  toggleMoodsRating: (idx) => {
-    set((state) => {
-      const newMoodsRating = state.moodsRating.map((mood, index) => {
-        if (idx === index) {
-          mood.pressed = !mood.pressed;
-        } else {
-          mood.pressed = false;
-        }
-        return mood;
-      });
-      return { moodsRating: newMoodsRating, selectedMood: newMoodsRating[idx] };
-    });
-  },
+    serverUrl: "https://movies.gjuniarto.com",
+    headers: [],
+    quote: [],
+    records: [],
+    journalResponse: {},
+    moodsRating: moodsRatingInitial,
+    selectedMood: {
+        emote: "emoticon-cool-outline",
+        rating: 3,
+        color: "#52a0a6",
+        pressed: false,
+        colorWhenPressed: "#52a0a6",
+        topText: "How are you feeling today?"
+    },
+    chipsData: emotions,
+    toggleChips: (rating, chip) => {
+        set((state) => {
+            const newChipsData = { ...state.chipsData };
+            newChipsData[rating][chip] = !newChipsData[rating][chip];
+            return { chipsData: newChipsData };
+        });
+    },
+    specialSetter: (key, payload) => {
+        set((state) => {
+            return { [key]: payload };
+        });
+    },
+    toggleMoodsRating: (idx) => {
+        set((state) => {
+            const newMoodsRating = state.moodsRating.map((mood, index) => {
+                if (idx === index) {
+                    mood.pressed = !mood.pressed;
+                } else {
+                    mood.pressed = false;
+                }
+                return mood;
+            });
+            return { moodsRating: newMoodsRating, selectedMood: newMoodsRating[idx] };
+        });
+    },
   getQuote: async () => {
     try {
       const { data: response } = await axios({
@@ -57,14 +57,12 @@ export const useMainStore = create((set) => ({
         },
       });
       console.log(response);
-
-      if (response) {
-        set({ quote: [response] });
-      }
-    } catch (error) {
-      console.log(error);
+      set({quote: response});
+    }catch(error) {
+      throw(error)
     }
   },
+
   login: async ({ email, password }) => {
     try {
       console.log(email, password);
@@ -87,39 +85,42 @@ export const useMainStore = create((set) => ({
       console.log(records, "getRecord Log");
       set({ records });
 
+
       const moods = records.length ? records[0].moods : records;
-      console.log(moods, "ini moods");
-      const { data: quotes } = await axios({
-        url: `${serverUrl}/quotes`,
-        method: "post",
-        data: {
-          moods,
-        },
-        headers: {
-          access_token: await AsyncStorage.getItem("token"),
-        },
-      });
-      console.log(quotes, "ini quotes");
-      set({ quote: [quotes] });
-      if (records.length !== 0) {
-        console.log(journal_content, "ini Journal content");
-        const journal_content = records[0].Journal[0].content;
-        const { data: journalResponse } = await axios({
-          method: "post",
-          url: `${serverUrl}/journalResponse`,
-          data: {
-            journal_content,
-          },
-          headers: { access_token: await AsyncStorage.getItem("token") },
-        });
-        console.log(journalResponse);
-        set({ journalResponse });
-      }
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  },
+            console.log(moods, "ini moods");
+            const { data: quotes } = await axios({
+                url: `${serverUrl}/quotes`,
+                method: "post",
+                data: {
+                    moods
+                },
+                headers: {
+                    access_token: await AsyncStorage.getItem("token")
+                }
+            });
+            console.log(quotes, "ini quotes");
+            set({ quote: [quotes] });
+            let journalResponse;
+            if (records.length !== 0) {
+                console.log(journal_content, "ini Journal content");
+                const journal_content = records[0].Journal[0].content;
+                const { data } = await axios({
+                    method: "post",
+                    url: `${serverUrl}/journalResponse`,
+                    data: {
+                        journal_content
+                    },
+                    headers: { access_token: await AsyncStorage.getItem("token") }
+                });
+                journalResponse = data;
+                set({ journalResponse });
+            }
+            set({ headers: [quotes, journalResponse] });
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    },
   register: async (data) => {
     try {
       const res = await axios.post(`${serverUrl}/register`, {

@@ -6,6 +6,7 @@ import LoginPage from "./screens/LoginPage";
 import SignupPage from "./screens/SignupPage";
 import JournalPage from "./screens/JournalPage";
 import Onboarding from "./components/Onboarding/Onboarding";
+import ChatFromAi from "./components/ChatOpenAi";
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
         initialRouteName="Home"
         screenOptions={{ headerShown: true }}
       >
+        <Stack.Screen name="ChatOpenAi" component={ChatFromAi} />
         <Stack.Screen name="Onboarding" component={Onboarding} />
         <Stack.Screen name="LandingPage" component={LandingPage} />
         <Stack.Screen name="JournalPage" component={JournalPage} />

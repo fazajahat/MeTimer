@@ -77,13 +77,15 @@ export default function LandingPage({ navigation }) {
             contentContainerStyle={styles.flatListContainer}
             pagingEnabled={true}
           />
-          <ActivityIndicator
-            size="large"
-            color="#0000ff"
-            hidesWhenStopped={true}
-            animating={headers.length === 0}
-            style={{ marginBottom: 20 }}
-          />
+          {headers.length == 0 && (
+            <ActivityIndicator
+              size="large"
+              color="#0000ff"
+              hidesWhenStopped={true}
+              animating={headers.length === 0}
+              style={{ marginBottom: 20 }}
+            />
+          )}
 
           {/* MOOD TITLE */}
           <Text

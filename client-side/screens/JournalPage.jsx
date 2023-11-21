@@ -87,6 +87,7 @@ export default function CalendarPage({ navigation }) {
             const data = { rateMood, moods, title, content };
 
             await postJournal(data);
+            navigation.navigate("LandingPageTabs");
         } catch (error) {
             console.log(error);
         }

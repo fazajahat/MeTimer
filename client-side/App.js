@@ -10,6 +10,7 @@ import ChatFromAi from "./components/ChatOpenAi";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import NewsPage from "./screens/NewsPage";
 import { Ionicons } from "@expo/vector-icons";
+import ProfilePage from "./screens/ProfilePage";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,6 +43,16 @@ function LandingPageTabs() {
           tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="newspaper" color={color} size={27} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ProfilePage"
+        component={ProfilePage}
+        options={{
+          tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="happy-outline" color={color} size={27} />
           ),
         }}
       />

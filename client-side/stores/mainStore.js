@@ -2,13 +2,12 @@ import { create } from "zustand";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moodsRatingInitial from "../data/moodsRatingInitial";
-import chipsData from "../data/chipsData";
 import emotions from "../data/emotions";
-const baseUrl = "http://10.0.2.2:3000";
 const serverUrl = "https://movies.gjuniarto.com";
 
 export const useMainStore = create((set) => ({
     serverUrl: "https://movies.gjuniarto.com",
+    headers: [],
     quote: [],
     records: [],
     journalResponse: {},
@@ -98,10 +97,11 @@ export const useMainStore = create((set) => ({
             });
             console.log(quotes, "ini quotes");
             set({ quote: [quotes] });
+            let journalResponse;
             if (records.length !== 0) {
                 console.log(journal_content, "ini Journal content");
                 const journal_content = records[0].Journal[0].content;
-                const { data: journalResponse } = await axios({
+                const { data } = await axios({
                     method: "post",
                     url: `${serverUrl}/journalResponse`,
                     data: {
@@ -109,9 +109,10 @@ export const useMainStore = create((set) => ({
                     },
                     headers: { access_token: await AsyncStorage.getItem("token") }
                 });
-                console.log(journalResponse);
+                journalResponse = data;
                 set({ journalResponse });
             }
+            set({ headers: [quotes, journalResponse] });
         } catch (error) {
             console.log(error);
             throw error;

@@ -11,6 +11,7 @@ export const useMainStore = create((set) => ({
     headers: [],
     quote: [],
     records: [],
+    recordChart: [],
     journalResponse: {},
     moodsRating: moodsRatingInitial,
     selectedMood: {
@@ -83,7 +84,7 @@ export const useMainStore = create((set) => ({
                 headers: { access_token: await AsyncStorage.getItem("token") }
             });
             console.log(records, "getRecord Log");
-            set({ records });
+            set({ records, recordChart: records.map(el => el.rateMood) });
 
             const moods = records.length ? records[0].moods : 0;
             console.log(moods, "ini moods");
@@ -150,7 +151,7 @@ export const useMainStore = create((set) => ({
                 headers: { access_token: await AsyncStorage.getItem("token") }
             });
             console.log(response, "getRecord Log");
-            set({ records: response });
+            set({ records: response, recordChart: response.map(el => el.rateMood) });
         } catch (error) {
             throw error;
         }

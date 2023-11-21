@@ -22,7 +22,6 @@ export default function MoodChips() {
           mode="outlined"
           onPress={() => {
             toggleChips(selectedMood.rating, chip)
-            console.log(selectedStates);
           }}
         >
           {chip}

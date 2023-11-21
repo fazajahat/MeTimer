@@ -3,7 +3,7 @@ import {
   View,
   KeyboardAvoidingView,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import {
@@ -33,16 +33,16 @@ export default function LoginScreen({ navigation }) {
       await login({
         email: email.value,
         password: password.value,
-      })
+      });
 
       navigation.reset({
         index: 0,
-        routes: [{ name: "LandingPage" }],
+        routes: [{ name: "LandingPageTabs" }],
       });
-      Alert.alert("Login successful.")
+      Alert.alert("Login successful.");
     } catch (error) {
-      Alert.alert(error)
       console.log(error);
+      Alert.alert("Error", error.response.data.message);
     }
   };
 
@@ -56,7 +56,6 @@ export default function LoginScreen({ navigation }) {
           selectionColor={DefaultTheme.colors.primary}
           underlineColor="transparent"
           mode="outlined"
-
           label="Email"
           returnKeyType="next"
           value={email.value}
@@ -86,19 +85,14 @@ export default function LoginScreen({ navigation }) {
           error={!!password.error}
           errorText={password.error}
           secureTextEntry
+          onSubmitEditing={onLoginPressed}
         />
 
         {password.error ? (
           <Text style={styles.description}>{password.error}</Text>
         ) : null}
       </View>
-      {/* <View style={styles.forgotPassword}>
-        <TouchableOpacity
-        // onPress={() => navigation.navigate("ResetPasswordScreen")}
-        >
-          <Text style={styles.forgot}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View> */}
+
       <PaperButton
         style={[styles.button]}
         labelStyle={styles.text}
@@ -109,9 +103,7 @@ export default function LoginScreen({ navigation }) {
       </PaperButton>
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
-        <TouchableOpacity
-        onPress={() => navigation.replace("SignupPage")}
-        >
+        <TouchableOpacity onPress={() => navigation.replace("SignupPage")}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>

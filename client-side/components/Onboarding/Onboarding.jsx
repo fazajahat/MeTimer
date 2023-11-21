@@ -1,10 +1,18 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, FlatList, Animated } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Animated,
+  TouchableOpacity,
+} from "react-native";
 
 import OnboardingItem from "./OnboardingItem";
 import Pagination from "./Pagination";
 import slides from "./slides";
 import { Button } from "react-native-paper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default Onboarding = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,6 +29,11 @@ export default Onboarding = ({ navigation }) => {
       setEndPage(false);
     }
   }).current;
+
+  function skip () {
+    AsyncStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWI2OGYwNTg0YmFkZDYxMzhmYjcwYyIsImVtYWlsIjoiY21ua0BtYWlsLmNvbSIsImlhdCI6MTcwMDQ4OTQ3M30.VqXwCYx7AyeZBZUpiCQJG_vWH-OD991_y-VGMmss0UE");
+    navigation.replace("LandingPageTabs")
+  }
 
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
   return (
@@ -46,25 +59,25 @@ export default Onboarding = ({ navigation }) => {
       </View>
 
       {/* FOOTER */}
-      <View
-        style={
-          (styles.footerContainer, { borderColor: "blue" })
-        }
-      >
+      <View style={(styles.footerContainer, { borderColor: "blue" })}>
         <View style={styles.pagination}>
-          <Pagination data={slides} scrollX={scrollX} />
+
+          {/* PRESS PAGINATION TO SKIP */}
+          <TouchableOpacity onPress={skip}>
+            <Pagination data={slides} scrollX={scrollX} />
+          </TouchableOpacity>
         </View>
         <Button
           mode="contained"
           onPress={() => {
             if (endPage) {
-                return navigation.navigate("SignupPage");
+              return navigation.navigate("SignupPage");
             }
             slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
           }}
           style={styles.button}
           labelStyle={styles.text}
-        //   disabled={!endPage}
+          //   disabled={!endPage}
         >
           Next
         </Button>

@@ -47,46 +47,44 @@ export const useMainStore = create((set) => ({
             return { moodsRating: newMoodsRating, selectedMood: newMoodsRating[idx] };
         });
     },
-  getQuote: async () => {
-    try {
-      const { data: response } = await axios({
-        url: `${serverUrl}/quotes`,
-        method: "GET",
-        headers: {
-          access_token: await AsyncStorage.getItem("token"),
-        },
-      });
-      console.log(response);
-      set({quote: response});
-    }catch(error) {
-      throw(error)
-    }
-  },
+    getQuote: async () => {
+        try {
+            const { data: response } = await axios({
+                url: `${serverUrl}/quotes`,
+                method: "GET",
+                headers: {
+                    access_token: await AsyncStorage.getItem("token")
+                }
+            });
+            console.log(response);
+            set({ quote: response });
+        } catch (error) {
+            throw error;
+        }
+    },
 
-  login: async ({ email, password }) => {
-    try {
-      console.log(email, password);
-      const { data: response } = await axios.post(`${serverUrl}/login`, {
-        email,
-        password,
-      });
-      console.log(response);
-      await AsyncStorage.setItem("token", response.access_token);
-    } catch (error) {
-      console.log(error.response, "register main store");
-      throw error;
-    }
-  },
-  loadHomepage: async () => {
-    try {
-      const { data: records } = await axios.get(`${serverUrl}/records`, {
-        headers: { access_token: await AsyncStorage.getItem("token") },
-      });
-      console.log(records, "getRecord Log");
-      set({ records });
+    login: async ({ email, password }) => {
+        try {
+            console.log(email, password);
+            const { data: response } = await axios.post(`${serverUrl}/login`, {
+                email,
+                password
+            });
+            await AsyncStorage.setItem("token", response.access_token);
+        } catch (error) {
+            console.log(error.response, "register main store");
+            throw error;
+        }
+    },
+    loadHomepage: async () => {
+        try {
+            const { data: records } = await axios.get(`${serverUrl}/records`, {
+                headers: { access_token: await AsyncStorage.getItem("token") }
+            });
+            console.log(records, "getRecord Log");
+            set({ records });
 
-
-      const moods = records.length ? records[0].moods : records;
+            const moods = records.length ? records[0].moods : records;
             console.log(moods, "ini moods");
             const { data: quotes } = await axios({
                 url: `${serverUrl}/quotes`,
@@ -121,55 +119,56 @@ export const useMainStore = create((set) => ({
             throw error;
         }
     },
-  register: async (data) => {
-    try {
-      const res = await axios.post(`${serverUrl}/register`, {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        password: data.password,
-      });
-      console.log(res);
-    } catch (error) {
-      console.log(error.response, "register main store");
-      throw error;
-    }
-  },
-  postJournal: async (data) => {
-    try {
-      await axios.post(`${serverUrl}/records`, data, {
-        headers: { access_token: await AsyncStorage.getItem("token") },
-      });
-    } catch (error) {
-      throw error;
-    }
-  },
-  getRecords: async () => {
-    try {
-      const { data: response } = await axios.get(`${serverUrl}/records`, {
-        headers: { access_token: await AsyncStorage.getItem("token") },
-      });
-      console.log(response, "getRecord Log");
-      set({ records: response });
-    } catch (error) {
-      throw error;
-    }
-  },
+    register: async (data) => {
+        try {
+            const res = await axios.post(`${serverUrl}/register`, {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                email: data.email,
+                password: data.password
+            });
+            console.log(res);
+        } catch (error) {
+            console.log(error.response, "register main store");
+            throw error;
+        }
+    },
+    postJournal: async (data) => {
+        try {
+            await axios.post(`${serverUrl}/records`, data, {
+                headers: { access_token: await AsyncStorage.getItem("token") }
+            });
+            console.log("success post data");
+        } catch (error) {
+            throw error;
+        }
+    },
+    getRecords: async () => {
+        try {
+            const { data: response } = await axios.get(`${serverUrl}/records`, {
+                headers: { access_token: await AsyncStorage.getItem("token") }
+            });
+            console.log(response, "getRecord Log");
+            set({ records: response });
+        } catch (error) {
+            throw error;
+        }
+    },
 
-  getJournalResponse: async (journal_content) => {
-    try {
-      const { data: journalResponse } = await axios({
-        method: "post",
-        url: `${serverUrl}/journalResponse`,
-        data: {
-          journal_content,
-        },
-        headers: { access_token: await AsyncStorage.getItem("token") },
-      });
-      set({ journalResponse });
-    } catch (error) {
-      console.log(error.response.data);
-      throw error;
+    getJournalResponse: async (journal_content) => {
+        try {
+            const { data: journalResponse } = await axios({
+                method: "post",
+                url: `${serverUrl}/journalResponse`,
+                data: {
+                    journal_content
+                },
+                headers: { access_token: await AsyncStorage.getItem("token") }
+            });
+            set({ journalResponse });
+        } catch (error) {
+            console.log(error.response.data);
+            throw error;
+        }
     }
-  },
 }));

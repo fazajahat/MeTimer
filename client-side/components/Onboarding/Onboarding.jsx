@@ -31,7 +31,10 @@ export default Onboarding = ({ navigation }) => {
   }).current;
 
   function skip () {
+    // Token Cemonk
     // AsyncStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWI2OGYwNTg0YmFkZDYxMzhmYjcwYyIsImVtYWlsIjoiY21ua0BtYWlsLmNvbSIsImlhdCI6MTcwMDQ4OTQ3M30.VqXwCYx7AyeZBZUpiCQJG_vWH-OD991_y-VGMmss0UE");
+
+    // Token Gery
     AsyncStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWI0MDM0NTg0YmFkZDYxMzQ3MGNiZCIsImVtYWlsIjoiZ2VyeWp1bmlhcnRvQGdtYWlsLmNvbSIsImlhdCI6MTcwMDU1MDI3NX0.psIfsv_TT7-FNZi_GfaXHS68Q8OJwfDNl8dOwIXHQPk");
     navigation.replace("LandingPageTabs")
   }

@@ -21,7 +21,6 @@ import MoodButtonNew from "../components/MoodButtonNew";
 export default function LandingPage({ navigation }) {
   const loadHomepage = useMainStore((state) => state.loadHomepage);
   const records = useMainStore((state) => state.records);
-  const recordChart = useMainStore((state) => state.recordChart);
   const headers = useMainStore((state) => state.headers);
 
   // mendapatkan records setelah itu baru quote dan journalResponse dari records index ke 0
@@ -55,7 +54,7 @@ export default function LandingPage({ navigation }) {
           <Text
             style={[
               Platform.OS === "ios" ? styles.iosText : styles.androidText,
-              { paddingVertical: 15 },
+              { paddingVertical: 15, fontWeight: "bold" },
             ]}
           >
             Me Timer

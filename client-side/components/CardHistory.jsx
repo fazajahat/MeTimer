@@ -1,10 +1,11 @@
-import { Card } from "react-native-paper";
+import { Card, Chip } from "react-native-paper";
 import { Text, View, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import moodsRatingInitial from "../data/moodsRatingInitial";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function CardHistory({ data }) {
-  console.log(data, 'ini data cardhist');
+  console.log(data, "ini data cardhist");
 
   function formatDate(date) {
     const now = new Date();
@@ -42,12 +43,14 @@ export default function CardHistory({ data }) {
         <View style={styles.cardContentWrapper}>
           <View style={{ width: "15%" }}>
             <MaterialCommunityIcons
-              name={moodsRatingInitial[data.rateMood-1].emote}
+              name={moodsRatingInitial[data.rateMood - 1].emote}
               size={50}
-              color="#FFC947"
+              color={moodsRatingInitial[data.rateMood - 1].color}
             />
           </View>
-          <View style={{ flexDirection: "column", width: "80%", marginLeft: 10, }}>
+          <View
+            style={{ flexDirection: "column", width: "80%", marginLeft: 10 }}
+          >
             <Text
               numberOfLines={1}
               style={{ fontSize: 20, fontWeight: "bold" }}
@@ -62,17 +65,35 @@ export default function CardHistory({ data }) {
             </Text>
           </View>
         </View>
-        <Text style={{ fontSize: 15, textAlign: "right" }}>
-          {formatDate(data.date)}
-        </Text>
+        <View style={styles.cardFooter}>
+          <ScrollView style={styles.chipScroll} horizontal>
+            {data.moods.map((el, index) => {
+              return (
+                <Chip key={index + "chip"} style={{ marginRight: 5,  }}>
+                  {el}
+                </Chip>
+              );
+            })}
+          </ScrollView>
+          <Text style={{ fontSize: 15, textAlign: "right" }}>
+            {formatDate(data.date)}
+          </Text>
+        </View>
       </Card.Content>
     </Card>
   );
 }
 
 const styles = StyleSheet.create({
+  cardFooter: {
+    flexDirection: "row",
+  },
+  chipScroll: {
+    width: "55%",
+    marginRight: 7,
+  },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
     width: "100%",
     borderRadius: 10,
     marginBottom: 10,

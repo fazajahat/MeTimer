@@ -6,21 +6,25 @@ import { useEffect } from "react";
 import { useMainStore } from "../stores/mainStore";
 import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
+import CardHistory from "../components/CardHistory";
 import { Audio } from "expo-av";
 import { Button } from "react-native-paper";
 
 export default function LandingPage({ navigation }) {
-    const getQuote = useMainStore((state) => state.getQuote);
-    const quote = useMainStore((state) => state.quote);
+    const loadHomepage = useMainStore((state) => state.loadHomepage);
+    const records = useMainStore((state) => state.records);
+    const headers = useMainStore((state) => state.headers);
+
+    // mendapatkan records setelah itu baru quote dan journalResponse dari records index ke 0
 
     useEffect(() => {
-        getQuote();
+        loadHomepage();
     }, []);
 
     const [refreshing, setRefreshing] = useState(false);
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
-        getQuote().then(() => setRefreshing(false));
+        loadHomepage().then(() => setRefreshing(false));
     }, []);
 
     const currentDate = new Date();
@@ -45,8 +49,8 @@ export default function LandingPage({ navigation }) {
                     {/* QUOTES HORIZONTAL */}
                     <FlatList
                         style={{ paddingTop: 10 }}
-                        data={quote || []}
-                        renderItem={({ item }) => <MyCard item={item} />}
+                        data={headers || []}
+                        renderItem={({ item, index }) => <MyCard item={item} index={index} />}
                         horizontal={true}
                         contentContainerStyle={styles.flatListContainer}
                         pagingEnabled={true}
@@ -55,12 +59,26 @@ export default function LandingPage({ navigation }) {
                     {/* MOOD TITLE */}
                     <Text style={Platform.OS === "ios" ? styles.iosText : styles.androidText}>How was your mood today</Text>
 
-                    {/* MOOD EMOTE BUTTONS */}
-                    <MoodButton toJournal={true} navigation={navigation} />
-                </View>
-            </ScrollView>
-        </SafeAreaView>
-    );
+          {/* MOOD TITLE */}
+          <Text
+            style={Platform.OS === "ios" ? styles.iosText : styles.androidText}
+          >
+            How was your mood today
+          </Text>
+
+          {/* MOOD EMOTE BUTTONS */}
+          <MoodButton toJournal={true} navigation={navigation} />
+          <View>
+            <Button title="Play Sound" onPress={playSound}
+            >Click Me</Button>
+          </View>
+          
+            {/* CARD HISTORY */}
+            <CardHistory />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({

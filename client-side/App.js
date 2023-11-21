@@ -9,8 +9,9 @@ import Onboarding from "./components/Onboarding/Onboarding";
 import ChatFromAi from "./components/ChatOpenAi";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import NewsPage from "./screens/NewsPage";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Entypo, FontAwesome } from "@expo/vector-icons";
 import ProfilePage from "./screens/ProfilePage";
+import HistoryPage from "./screens/Historypage";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -32,7 +33,27 @@ function LandingPageTabs() {
         options={{
           tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="happy-outline" color={color} size={27} />
+            <Ionicons name="home" color={color} size={27} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Journal"
+        component={HistoryPage}
+        options={{
+          tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="book" color={color} size={27} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="ChatAi"
+        component={ChatFromAi}
+        options={{
+          tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
+          tabBarIcon: ({ color, size }) => (
+            <Entypo name="chat" color={color} size={27} />
           ),
         }}
       />
@@ -47,22 +68,12 @@ function LandingPageTabs() {
         }}
       />
       <Tab.Screen
-        name="ProfilePage"
+        name="Profile"
         component={ProfilePage}
         options={{
           tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="happy-outline" color={color} size={27} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="ChatAi"
-        component={ChatFromAi}
-        options={{
-          tabBarLabelStyle: { fontSize: 13, marginBottom: 5 },
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="happy-outline" color={color} size={27} />
+            <FontAwesome name="user-circle" color={color} size={27} />
           ),
         }}
       />

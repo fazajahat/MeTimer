@@ -19,13 +19,19 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const login = useMainStore((state) => state.login);
+  const loading = useMainStore((state) => state.loading);
+  const specialSetter = useMainStore((state) => state.specialSetter);
+  const [loginError, setLoginError] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const onLoginPressed = async () => {
+    specialSetter("loading", true);
     const emailError = Validator.emailValidator(email.value);
     const passwordError = Validator.passwordValidator(password.value);
     setEmail({ ...email, error: emailError });
     setPassword({ ...password, error: passwordError });
     if (emailError || passwordError) {
+      specialSetter("loading", false);
       return;
     }
 
@@ -39,10 +45,14 @@ export default function LoginScreen({ navigation }) {
         index: 0,
         routes: [{ name: "LandingPageTabs" }],
       });
-      Alert.alert("Login successful.");
+      setLoginError("");
+      // Alert.alert("Login successful.");
     } catch (error) {
       console.log(error);
-      Alert.alert("Error", error.response.data.message);
+      // Alert.alert("Error", error.response.data.message);
+      setLoginError(error.response.data.message);
+    } finally {
+      specialSetter("loading", false);
     }
   };
 
@@ -50,6 +60,7 @@ export default function LoginScreen({ navigation }) {
     <KeyboardAvoidingView style={styles.container_bg} behavior="adjustPan">
       <Text style={styles.header}>Welcome back.</Text>
 
+      {/* EMAIL INPUT */}
       <View style={styles.container}>
         <PaperInput
           style={styles.input}
@@ -72,6 +83,8 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.description}>{email.error}</Text>
         ) : null}
       </View>
+
+      {/* PASSWORD INPUT */}
       <View style={styles.container}>
         <PaperInput
           style={styles.input}
@@ -84,20 +97,31 @@ export default function LoginScreen({ navigation }) {
           onChangeText={(text) => setPassword({ ...password, value: text })}
           error={!!password.error}
           errorText={password.error}
-          secureTextEntry
+          secureTextEntry={!passwordVisible}
           onSubmitEditing={onLoginPressed}
+          right={
+            <PaperInput.Icon
+              icon={passwordVisible ? "eye-off" : "eye"}
+              onPress={() => setPasswordVisible(!passwordVisible)}
+            />
+          }
         />
 
         {password.error ? (
-          <Text style={styles.description}>{password.error}</Text>
+          <Text style={styles.error}>{password.error}</Text>
         ) : null}
       </View>
 
+      {/* ERROR TEXT */}
+      {loginError ? <Text style={styles.errorLogin}>{loginError}</Text> : null}
+
+      {/* LOGIN BUTTON */}
       <PaperButton
         style={[styles.button]}
         labelStyle={styles.text}
         mode={"contained"}
         onPress={onLoginPressed}
+        loading={loading}
       >
         Login
       </PaperButton>
@@ -170,6 +194,14 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: DefaultTheme.colors.error,
     paddingTop: 8,
+  },
+  errorLogin: {
+    marginLeft: 3,
+    fontSize: 13,
+    color: DefaultTheme.colors.error,
+    paddingTop: 8,
+    textAlign: "left",
+    alignSelf: "flex-start",
   },
   background: {
     flex: 1,

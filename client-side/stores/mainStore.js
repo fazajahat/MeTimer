@@ -8,6 +8,7 @@ const serverUrl = "https://movies.gjuniarto.com";
 
 export const useMainStore = create((set) => ({
     serverUrl: "https://movies.gjuniarto.com",
+    loading: false,
     headers: [],
     quote: [],
     records: [],
@@ -66,6 +67,7 @@ export const useMainStore = create((set) => ({
 
     login: async ({ email, password }) => {
         try {
+            set({ loading: true });
             console.log(email, password);
             const { data: response } = await axios.post(`${serverUrl}/login`, {
                 email,
@@ -76,6 +78,8 @@ export const useMainStore = create((set) => ({
         } catch (error) {
             console.log(error.response, "register main store");
             throw error;
+        } finally {
+            set({ loading: false });
         }
     },
     loadHomepage: async () => {

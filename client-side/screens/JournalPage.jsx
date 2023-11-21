@@ -6,6 +6,7 @@ import * as Calendar from "expo-calendar";
 import MoodButton from "../components/MoodButton";
 import { useMainStore } from "../stores/mainStore";
 import MoodChips from "../components/MoodChips";
+import MoodButtonNew from "../components/MoodButtonNew";
 
 async function getDefaultCalendarSource() {
     const defaultCalendar = await Calendar.getDefaultCalendarAsync();
@@ -101,7 +102,9 @@ export default function CalendarPage({ navigation }) {
                 </View>
 
                 {/* MOOD EMOTE BUTTONS */}
-                <MoodButton toJournal={false} navigation={navigation} />
+                {/* <MoodButton toJournal={false} navigation={navigation} /> */}
+                <MoodButtonNew toJournal={false} navigation={navigation} />
+
 
                 {/* MOOD CHIPS */}
                 <MoodChips />

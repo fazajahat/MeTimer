@@ -1,31 +1,32 @@
 import React, { memo } from "react";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
-import { Button, Card, TouchableRipple } from "react-native-paper";
+import { Card } from "react-native-paper";
 import { useMainStore } from "../stores/mainStore";
 import { StyleSheet, View } from "react-native";
 
-function MoodButton({ toJournal, navigation }) {
+function MoodButtonNew({ toJournal, navigation }) {
   const moodsRating = useMainStore((state) => state.moodsRating);
   const selectedMood = useMainStore((state) => state.selectedMood);
   const toggleMoodsRating = useMainStore((state) => state.toggleMoodsRating);
   const seletedMood = useMainStore((state) => state.selectedMood);
   return (
-    <Card style={styles.card}>
+    <>
       <View style={styles.iconContainer}>
         {moodsRating.map((el, index) => {
           return (
-            <TouchableRipple
+            <Card
               // contentStyle={{ width: 50, height: 50, alignSelf: "center" }}
               style={{
                 flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
                 width: 50,
-                height: 50,
+                height: 65,
                 marginVertical: 1,
                 // backgroundColor: "red",
+                backgroundColor: "#212121",
               }}
-              rippleColor='rgba(255, 255, 255, 0.32)'
+              rippleColor="rgba(255, 255, 255, 0.32)"
               onPress={() => {
                 toggleMoodsRating(index);
                 if (toJournal) {
@@ -33,8 +34,6 @@ function MoodButton({ toJournal, navigation }) {
                 }
               }}
               key={index + "journal"}
-              // icon={({ color, size }) => (
-              //   )}
             >
               <MaterialCommunityIcons
                 name={moodsRating[index].emote}
@@ -45,11 +44,11 @@ function MoodButton({ toJournal, navigation }) {
                     : moodsRating[index].color
                 }
               />
-            </TouchableRipple>
+            </Card>
           );
         })}
       </View>
-    </Card>
+    </>
   );
 }
 
@@ -62,11 +61,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#1d1d1d",
   },
   iconContainer: {
+    flex: 1,
+    gap: 4,
     flexDirection: "row",
     justifyContent: "space-around",
     paddingVertical: 13,
     alignItems: "center",
+    width: "100%",
   },
 });
 
-export default memo(MoodButton);
+export default memo(MoodButtonNew);

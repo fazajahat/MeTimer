@@ -6,6 +6,7 @@ import {
   FlatList,
   Platform,
   RefreshControl,
+  ActivityIndicator,
 } from "react-native";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -15,6 +16,7 @@ import MyCard from "../components/CardPage";
 import MoodButton from "../components/MoodButton";
 import CardHistory from "../components/CardHistory";
 import Chart from "../components/Chart";
+import MoodButtonNew from "../components/MoodButtonNew";
 
 export default function LandingPage({ navigation }) {
   const loadHomepage = useMainStore((state) => state.loadHomepage);
@@ -63,6 +65,7 @@ export default function LandingPage({ navigation }) {
           <View style={styles.dateContainer}>
             <Text style={styles.dateText}>{formattedDate}</Text>
           </View>
+
           {/* QUOTES HORIZONTAL */}
           <FlatList
             style={{ paddingTop: 10 }}
@@ -74,16 +77,24 @@ export default function LandingPage({ navigation }) {
             contentContainerStyle={styles.flatListContainer}
             pagingEnabled={true}
           />
+          <ActivityIndicator
+            size="large"
+            color="#0000ff"
+            hidesWhenStopped={true}
+            animating={headers.length === 0}
+            style={{ marginBottom: 20 }}
+          />
 
           {/* MOOD TITLE */}
           <Text
             style={Platform.OS === "ios" ? styles.iosText : styles.androidText}
           >
-            How was your mood today
+            How are you feeling today?
           </Text>
 
           {/* MOOD EMOTE BUTTONS */}
-          <MoodButton toJournal={true} navigation={navigation} />
+          {/* <MoodButton toJournal={true} navigation={navigation} /> */}
+          <MoodButtonNew toJournal={true} navigation={navigation} />
 
           {/* CHART */}
           <Chart />
@@ -113,19 +124,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   flatListContainer: {
-    paddingRight: 16,
+    // paddingRight: 16,
   },
   iosText: {
     paddingTop: 15,
     paddingLeft: 13,
     fontFamily: "Helvetica",
     fontSize: 22,
-    fontWeight: "500",
+    fontWeight: "bold",
   },
   androidText: {
     fontFamily: "Roboto",
     fontSize: 16,
-    fontWeight: "400",
+    fontWeight: "bold",
   },
   dateContainer: {
     borderWidth: 1,

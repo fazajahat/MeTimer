@@ -84,7 +84,7 @@ export const useMainStore = create((set) => ({
             console.log(records, "getRecord Log");
             set({ records });
 
-            const moods = records.length ? records[0].moods : records;
+            const moods = records.length ? records[0].moods : 0;
             console.log(moods, "ini moods");
             const { data: quotes } = await axios({
                 url: `${serverUrl}/quotes`,

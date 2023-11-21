@@ -5,12 +5,11 @@ import { Audio } from "expo-av";
 import { useEffect, useState } from "react";
 
 export default function CardPage({ item, index }) {
-    const quote = useMainStore((state) => state.quote);
     const serverUrl = useMainStore((state) => state.serverUrl);
 
     const [sound, setSound] = useState();
     const playSound = async () => {
-        const { sound } = await Audio.Sound.createAsync({ uri: `${serverUrl}/public/music/${quote[0].voiceFile}` });
+        const { sound } = await Audio.Sound.createAsync({ uri: `${serverUrl}/public/music/${item?.quote?.voiceFile}` });
         setSound(sound);
         await sound.playAsync();
     };
@@ -36,7 +35,7 @@ export default function CardPage({ item, index }) {
                         <Card.Content style={{ width: 345 }}>
                             <View style={styles.textContainer}>
                                 <Text variant="bodyMedium" style={{ paddingTop: 10, color: "white" }}>
-                                    {item.response}
+                                    {item?.response}
                                 </Text>
                             </View>
                         </Card.Content>
@@ -52,7 +51,7 @@ export default function CardPage({ item, index }) {
                         <Card.Content style={{ width: 345 }}>
                             <View style={styles.textContainer}>
                                 <Text variant="bodyMedium" style={{ paddingTop: 10, color: "white" }}>
-                                    {item.quote}
+                                    {item?.quote}
                                 </Text>
                             </View>
                             <View style={{ width: "auto" }}>

@@ -3,6 +3,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import moodsRatingInitial from "../data/moodsRatingInitial";
 import emotions from "../data/emotions";
+
 const serverUrl = "https://movies.gjuniarto.com";
 
 export const useMainStore = create((set) => ({

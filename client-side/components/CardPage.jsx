@@ -9,7 +9,9 @@ export default function CardPage({ item, index }) {
 
     const [sound, setSound] = useState();
     const playSound = async () => {
-        const { sound } = await Audio.Sound.createAsync({ uri: `${serverUrl}/public/music/${item?.quote?.voiceFile}` });
+        const urlMusic = `${serverUrl}/public/music/${item?.voiceFile}`;
+        console.log(urlMusic)    
+        const { sound } = await Audio.Sound.createAsync({ uri: urlMusic });
         setSound(sound);
         await sound.playAsync();
     };

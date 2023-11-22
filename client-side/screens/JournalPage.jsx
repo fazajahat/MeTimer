@@ -52,6 +52,7 @@ export default function CalendarPage({ navigation }) {
     const selectedMood = useMainStore((state) => state.selectedMood);
     const chipsData = useMainStore((state) => state.chipsData);
     const postJournal = useMainStore((state) => state.postJournal);
+    const loadHomepage = useMainStore((state) => state.loadHomepage);
 
     const journalContent = useRef();
 
@@ -88,6 +89,7 @@ export default function CalendarPage({ navigation }) {
             const data = { rateMood, moods, title, content };
 
             await postJournal(data);
+            await loadHomepage();
             navigation.navigate("LandingPageTabs");
         } catch (error) {
             console.log(error);
@@ -104,11 +106,10 @@ export default function CalendarPage({ navigation }) {
                 {/* MOOD EMOTE BUTTONS */}
                 <MoodButtonNew toJournal={false} navigation={navigation} />
 
-
                 {/* MOOD CHIPS */}
                 <MoodChips />
 
-                <Text style={{marginBottom: 5, fontSize: 16, marginTop: 20}}>Describe what happened today..</Text>
+                <Text style={{ marginBottom: 5, fontSize: 16, marginTop: 20 }}>Describe what happened today..</Text>
 
                 {/* JOURNAL TITLE */}
                 <TextInput
@@ -122,7 +123,6 @@ export default function CalendarPage({ navigation }) {
                     onSubmitEditing={() => journalContent.current.focus()}
                     blurOnSubmit={false}
                     label="Title"
-                    
                     placeholderTextColor="#a0a0a0"
                 />
 

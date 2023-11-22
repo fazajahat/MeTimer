@@ -10,7 +10,7 @@ export default function CardPage({ item, index }) {
     const [sound, setSound] = useState();
     const playSound = async () => {
         const urlMusic = `${serverUrl}/public/music/${item?.voiceFile}`;
-        console.log(urlMusic)    
+        console.log(urlMusic);
         const { sound } = await Audio.Sound.createAsync({ uri: urlMusic });
         setSound(sound);
         await sound.playAsync();
@@ -31,10 +31,10 @@ export default function CardPage({ item, index }) {
                 <Card style={styles.card}>
                     <ImageBackground
                         source={{
-                            uri: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1700265600&semt=ais"
+                            uri: "https://images.unsplash.com/photo-1472149110793-7aa262859995?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTF8MTk3NzMwMnx8ZW58MHx8fHx8"
                         }}
                         style={styles.imageBackground}>
-                        <Card.Content style={{ width: 345 }}>
+                        <Card.Content style={{ width: 345, height: 170 }}>
                             <View style={styles.textContainer}>
                                 <Text variant="bodyMedium" style={{ paddingTop: 10, color: "white" }}>
                                     {item?.response}
@@ -47,11 +47,12 @@ export default function CardPage({ item, index }) {
                 <Card style={styles.card}>
                     <ImageBackground
                         source={{
-                            uri: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1700265600&semt=ais"
+                            uri: "https://images.unsplash.com/photo-1472149110793-7aa262859995?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTF8MTk3NzMwMnx8ZW58MHx8fHx8"
                         }}
                         style={styles.imageBackground}>
-                        <Card.Content style={{ width: 345 }}>
+                        <Card.Content style={{ width: 345, height: 170 }}>
                             <View style={styles.textContainer}>
+                                <Text style={{ letterSpacing: 1, fontSize: 20, fontWeight: "600" }}>Quote</Text>
                                 <Text variant="bodyMedium" style={{ paddingTop: 10, color: "white" }}>
                                     {item?.quote}
                                 </Text>

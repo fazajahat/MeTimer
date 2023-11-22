@@ -2,7 +2,7 @@ import React, { memo } from "react";
 import { MaterialCommunityIcons } from "react-native-vector-icons";
 import { Card } from "react-native-paper";
 import { useMainStore } from "../stores/mainStore";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 function MoodButtonNew({ toJournal, navigation }) {
   const moodsRating = useMainStore((state) => state.moodsRating);
@@ -15,16 +15,13 @@ function MoodButtonNew({ toJournal, navigation }) {
         {moodsRating.map((el, index) => {
           return (
             <Card
-              // contentStyle={{ width: 50, height: 50, alignSelf: "center" }}
               style={{
                 flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-                width: 50,
-                height: 65,
+                width: 70, // increased from 50
+                height: 85, // increased from 65
                 marginVertical: 1,
-                // backgroundColor: "red",
-                backgroundColor: "#212121",
               }}
               rippleColor="rgba(255, 255, 255, 0.32)"
               onPress={() => {
@@ -44,6 +41,7 @@ function MoodButtonNew({ toJournal, navigation }) {
                     : moodsRating[index].color
                 }
               />
+              <Text style={{ color: "black", textAlign: 'center', fontWeight: 'bold', fontSize: 11 }}>{moodsRating[index].name}</Text>
             </Card>
           );
         })}

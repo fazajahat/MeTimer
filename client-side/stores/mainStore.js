@@ -7,63 +7,66 @@ import emotions from "../data/emotions.json";
 const serverUrl = "https://movies.gjuniarto.com";
 
 export const useMainStore = create((set) => ({
-  serverUrl: "https://movies.gjuniarto.com",
-  loading: false,
-  chatLoading: false,
-  headers: [],
-  quote: [],
-  records: [],
-  recordChart: [],
-  journalResponse: {},
-  moodsRating: moodsRatingInitial,
-  selectedMood: {
-    emote: "emoticon-cool-outline",
-    rating: 3,
-    color: "#52a0a6",
-    pressed: false,
-    colorWhenPressed: "#52a0a6",
-    topText: "How are you feeling today?",
-  },
-  chipsData: emotions,
-  chatLogs: [],
-  toggleChips: (rating, chip) => {
-    set((state) => {
-      const newChipsData = { ...state.chipsData };
-      newChipsData[rating][chip] = !newChipsData[rating][chip];
-      return { chipsData: newChipsData };
-    });
-  },
-  specialSetter: (key, payload) => {
-    set((state) => {
-      return { [key]: payload };
-    });
-  },
-  toggleMoodsRating: (idx) => {
-    set((state) => {
-      const newMoodsRating = state.moodsRating.map((mood, index) => {
-        if (idx === index) {
-          mood.pressed = !mood.pressed;
-        } else {
-          mood.pressed = false;
-        }
-        return mood;
-      });
-      return { moodsRating: newMoodsRating, selectedMood: newMoodsRating[idx] };
-    });
-  },
-  getQuote: async () => {
-    try {
-      const { data: response } = await axios({
-        url: `${serverUrl}/quotes`,
-        method: "GET",
-        headers: {
-          access_token: await AsyncStorage.getItem("token"),
-        },
-      });
-      console.log(response);
-      set({ quote: response });
-    } catch (error) {
-      throw error;
+
+    serverUrl: "https://movies.gjuniarto.com",
+    loading: false,
+    chatLoading: false,
+    headers: [],
+    quote: [],
+    records: [],
+    recordDetail: {},
+    recordChart: [],
+    journalResponse: {},
+    userDetail: {},
+    moodsRating: moodsRatingInitial,
+    selectedMood: {
+        emote: "emoticon-cool-outline",
+        rating: 3,
+        color: "#52a0a6",
+        pressed: false,
+        colorWhenPressed: "#52a0a6",
+        topText: "How are you feeling today?"
+    },
+    chipsData: emotions,
+    chatLogs: [],
+    toggleChips: (rating, chip) => {
+        set((state) => {
+            const newChipsData = { ...state.chipsData };
+            newChipsData[rating][chip] = !newChipsData[rating][chip];
+            return { chipsData: newChipsData };
+        });
+    },
+    specialSetter: (key, payload) => {
+        set((state) => {
+            return { [key]: payload };
+        });
+    },
+    toggleMoodsRating: (idx) => {
+        set((state) => {
+            const newMoodsRating = state.moodsRating.map((mood, index) => {
+                if (idx === index) {
+                    mood.pressed = !mood.pressed;
+                } else {
+                    mood.pressed = false;
+                }
+                return mood;
+            });
+            return { moodsRating: newMoodsRating, selectedMood: newMoodsRating[idx] };
+        });
+    },
+    getQuote: async () => {
+        try {
+            const { data: response } = await axios({
+                url: `${serverUrl}/quotes`,
+                method: "GET",
+                headers: {
+                    access_token: await AsyncStorage.getItem("token")
+                }
+            });
+            console.log(response);
+            set({ quote: response });
+        } catch (error) {
+            throw error;
     }
   },
 
@@ -165,7 +168,6 @@ export const useMainStore = create((set) => ({
       throw error;
     }
   },
-
   getJournalResponse: async (journal_content) => {
     try {
       const { data: journalResponse } = await axios({
@@ -182,32 +184,46 @@ export const useMainStore = create((set) => ({
       throw error;
     }
   },
+    getChatLogs: async () => {
+        try {
+            set({ chatLoading: true });
+            const { data: chatLogs } = await axios.get(`${serverUrl}/chatLogs`, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            set({ chatLogs });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            set({ chatLoading: false });
+        }
+    },
+    postChatLogs: async (chat) => {
+        try {
+            const { data: chatLogs } = await axios.post(`${serverUrl}/chatLogs`, { chat }, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            set({ chatLogs });
+        } catch (error) {
+            console.log(error);
+        }
+    },
 
-  getChatLogs: async () => {
-    try {
-      set({ chatLoading: true });
-      const { data: chatLogs } = await axios.get(`${serverUrl}/chatLogs`, {
-        headers: { access_token: await AsyncStorage.getItem("token") },
-      });
-      set({ chatLogs });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      set({ chatLoading: false });
-    }
-  },
-  postChatLogs: async (chat) => {
-    try {
-      const { data: chatLogs } = await axios.post(
-        `${serverUrl}/chatLogs`,
-        { chat },
-        { headers: { access_token: await AsyncStorage.getItem("token") } }
-      );
-      set({ chatLogs });
-    } catch (error) {
-      console.log(error);
-    }
-  },
+    getRecordDetail: async (id) => {
+        try {
+            const { data: recordDetail } = await axios.get(`${serverUrl}/records/${id}`, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            console.log(recordDetail);
+            set({ recordDetail });
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    getUserDetail: async () => {
+        try {
+            const { data: userDetail } = await axios.get(`${serverUrl}/users`, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            set({ userDetail });
+        } catch (error) {
+          console.log(error)
+        }
+    },
+
+
   logout: async () => {
     try {
       await AsyncStorage.removeItem("token");

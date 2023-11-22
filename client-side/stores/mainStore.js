@@ -13,8 +13,10 @@ export const useMainStore = create((set) => ({
     headers: [],
     quote: [],
     records: [],
+    recordDetail: {},
     recordChart: [],
     journalResponse: {},
+    userDetail: {},
     moodsRating: moodsRatingInitial,
     selectedMood: {
         emote: "emoticon-cool-outline",
@@ -198,5 +200,22 @@ export const useMainStore = create((set) => ({
         } catch (error) {
             console.log(error);
         }
+    },
+
+    getRecordDetail: async (id) => {
+        try {
+            const { data: recordDetail } = await axios.get(`${serverUrl}/records/${id}`, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            console.log(recordDetail);
+            set({ recordDetail });
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    getUserDetai: async () => {
+        try {
+            const { data: userDetail } = await axios.get(`${serverUrl}/users`, { headers: { access_token: await AsyncStorage.getItem("token") } });
+            set({ userDetail });
+        } catch (error) {}
     }
 }));

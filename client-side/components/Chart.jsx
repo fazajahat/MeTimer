@@ -1,5 +1,5 @@
 import { Dimensions, View } from "react-native";
-import { BarChart } from "react-native-chart-kit";
+import { LineChart } from "react-native-chart-kit";
 import { Text } from "react-native-paper";
 import { useMainStore } from "../stores/mainStore";
 
@@ -9,8 +9,9 @@ export default function Chart() {
     <>
       {recordChart.length != 0 && (
         <View>
-          <Text>Mood Chart</Text>
-          <BarChart
+          <Text style={{ fontSize: 24, fontWeight: "bold" }}>Mood Chart</Text>
+          
+          <LineChart
             data={{
               labels: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"],
               datasets: [
@@ -25,9 +26,9 @@ export default function Chart() {
             yAxisSuffix=""
             yAxisInterval={1} // optional, defaults to 1
             chartConfig={{
-              backgroundColor: "#e26a00",
-              backgroundGradientFrom: "#fb8c00",
-              backgroundGradientTo: "#ffa726",
+              backgroundColor: "#6a3093",
+              backgroundGradientFrom: "#9370DB", // Medium Purple
+              backgroundGradientTo: "#6A5ACD", // Slate Blue
               decimalPlaces: 0, // optional, defaults to 2dp
               color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
@@ -37,7 +38,7 @@ export default function Chart() {
               propsForDots: {
                 r: "6",
                 strokeWidth: "2",
-                stroke: "#ffa726",
+                stroke: "#6a3093",
               },
             }}
             bezier

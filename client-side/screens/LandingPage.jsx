@@ -65,6 +65,19 @@ export default function LandingPage({ navigation }) {
             <Text style={styles.dateText}>{formattedDate}</Text>
           </View>
 
+          
+
+          {/* MOOD TITLE */}
+          <Text
+            style={Platform.OS === "ios" ? styles.iosText : styles.androidText}
+          >
+            How are you feeling today?
+          </Text>
+
+          {/* MOOD EMOTE BUTTONS */}
+          {/* <MoodButton toJournal={true} navigation={navigation} /> */}
+          <MoodButtonNew toJournal={true} navigation={navigation} />
+
           {/* QUOTES HORIZONTAL */}
           <FlatList
             style={{ paddingTop: 10 }}
@@ -85,17 +98,6 @@ export default function LandingPage({ navigation }) {
               style={{ marginBottom: 20 }}
             />
           )}
-
-          {/* MOOD TITLE */}
-          <Text
-            style={Platform.OS === "ios" ? styles.iosText : styles.androidText}
-          >
-            How are you feeling today?
-          </Text>
-
-          {/* MOOD EMOTE BUTTONS */}
-          {/* <MoodButton toJournal={true} navigation={navigation} /> */}
-          <MoodButtonNew toJournal={true} navigation={navigation} />
 
           {/* CHART */}
           <Chart />

@@ -70,30 +70,30 @@ export const useMainStore = create((set) => ({
     }
   },
 
-    login: async ({ email, password }) => {
-        try {
-            set({ loading: true });
-            console.log(email, password);
-            const { data: response } = await axios.post(`${serverUrl}/login`, {
-                email,
-                password
-            });
+  login: async ({ email, password }) => {
+    try {
+      set({ loading: true });
+      console.log(email, password);
+      const { data: response } = await axios.post(`${serverUrl}/login`, {
+        email,
+        password,
+      });
 
-            await AsyncStorage.setItem("token", response.access_token);
-        } catch (error) {
-            console.log(error.response, "register main store");
-            throw error;
-        } finally {
-            set({ loading: false });
-        }
-    },
-    loadHomepage: async () => {
-        try {
-            const { data: records } = await axios.get(`${serverUrl}/records`, {
-                headers: { access_token: await AsyncStorage.getItem("token") }
-            });
-            console.log(records, "getRecord Log");
-            set({ records, recordChart: records.map((el) => el.rateMood) });
+      await AsyncStorage.setItem("token", response.access_token);
+    } catch (error) {
+      console.log(error.response, "register main store");
+      throw error;
+    } finally {
+      set({ loading: false });
+    }
+  },
+  loadHomepage: async () => {
+    try {
+      const { data: records } = await axios.get(`${serverUrl}/records`, {
+        headers: { access_token: await AsyncStorage.getItem("token") },
+      });
+      console.log(records, "getRecord Log");
+      set({ records, recordChart: records.map((el) => el.rateMood) });
 
       const moods = records.length ? records[0].moods : 0;
       console.log(moods, "ini moods");
@@ -250,4 +250,5 @@ export const useMainStore = create((set) => ({
     } catch (error) {
       console.log(error);
     }
+  },
 }));

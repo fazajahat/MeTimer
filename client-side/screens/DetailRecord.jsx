@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Text, View, SafeAreaView, StyleSheet, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { Card, Chip, Title, Paragraph, Button } from "react-native-paper";
 import { useRoute } from "@react-navigation/native";
 import { useMainStore } from "../stores/mainStore";
@@ -54,7 +61,11 @@ export default function DetailRecord({ navigation }) {
         <Card style={{ marginTop: 20 }}>
           <Card.Content>
             <Paragraph style={{ fontStyle: "italic" }}>
-              {`" ${responseDetail.response} "`}
+              {responseDetail.response ? (
+                `" ${responseDetail.response} "`
+              ) : (
+                <ActivityIndicator color="gray" />
+              )}
             </Paragraph>
           </Card.Content>
         </Card>

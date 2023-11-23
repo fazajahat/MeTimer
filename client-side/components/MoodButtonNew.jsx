@@ -22,6 +22,10 @@ function MoodButtonNew({ toJournal, navigation }) {
                 width: 70, // increased from 50
                 height: 85, // increased from 65
                 marginVertical: 1,
+                backgroundColor:
+                  moodsRating[index].rating == seletedMood.rating
+                    ? "#e1e1e1"
+                    : "#ffffff",
               }}
               rippleColor="rgba(255, 255, 255, 0.32)"
               onPress={() => {

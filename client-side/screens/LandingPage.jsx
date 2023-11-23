@@ -65,8 +65,6 @@ export default function LandingPage({ navigation }) {
             <Text style={styles.dateText}>{formattedDate}</Text>
           </View>
 
-          
-
           {/* MOOD TITLE */}
           <Text
             style={Platform.OS === "ios" ? styles.iosText : styles.androidText}
@@ -101,11 +99,6 @@ export default function LandingPage({ navigation }) {
 
           {/* CHART */}
           <Chart />
-
-          {/* CARD HISTORY */}
-          {records.map((el, index) => (
-            <CardHistory key={index + "cardhist"} data={el} />
-          ))}
         </View>
       </ScrollView>
     </SafeAreaView>

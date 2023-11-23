@@ -14,6 +14,7 @@ import ProfilePage from "./screens/ProfilePage";
 import HistoryPage from "./screens/HistoryPage";
 import DetailRecord from "./screens/DetailRecord";
 import HowToMindfulness from "./screens/HowToMindfulness";
+import { Platform } from "react-native";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -27,7 +28,7 @@ function LandingPageTabs() {
         tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarStyle: {
-          height: 60,
+          height: Platform.OS === "ios" ? 80 : 60,
         },
       }}
     >

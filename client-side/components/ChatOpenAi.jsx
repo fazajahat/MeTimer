@@ -42,12 +42,10 @@ export default function ChatFromAi() {
     <KeyboardAvoidingView style={styles.container} behavior="adjustPan">
       <SafeAreaView style={{ flex: 1 }}>
         <View style={{ flex: 1, justifyContent: "space-between" }}>
-
           <View style={{ alignItems: "center" }}>
-
             {/* TITLE */}
             <Text style={styles.title}>Conseling With AI</Text>
-            
+
             <ScrollView
               ref={scrollViewRef}
               onContentSizeChange={() =>
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
     marginTop: 20,

@@ -23,7 +23,7 @@ export const useMainStore = create((set) => ({
   moodsRating: moodsRatingInitial,
   selectedMood: {
     emote: "emoticon-cool-outline",
-    rating: 3,
+    rating: 6,
     color: "#52a0a6",
     pressed: false,
     colorWhenPressed: "#52a0a6",

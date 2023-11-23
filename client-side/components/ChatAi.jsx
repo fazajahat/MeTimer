@@ -7,7 +7,7 @@ export default function ChatAi({ text }) {
       <View style={styles.aiContainer}>
         <Avatar.Image
           size={35}
-          source={require("../assets/images/chatgptLogo.jpg")}
+          source={require("../assets/images/jisoo.jpg")}
         />
         <Text style={{ textAlign: "right", marginLeft: 8 }}>Counsellor</Text>
       </View>

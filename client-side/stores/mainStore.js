@@ -15,7 +15,9 @@ export const useMainStore = create((set) => ({
   records: [],
   recordDetail: {},
   recordChart: [],
-  responseDetail: {},
+  responseDetail: {
+    response: "Waiting for response...",
+  },
   journalResponse: {},
   userDetail: {},
   moodsRating: moodsRatingInitial,

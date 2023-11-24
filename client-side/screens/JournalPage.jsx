@@ -92,7 +92,7 @@ export default function CalendarPage({ navigation }) {
 
             await postJournal(data);
             await loadHomepage();
-            navigation.navigate("HistoryPage");
+            navigation.navigate("Journal");
         } catch (error) {
             console.log(error);
         } finally {
